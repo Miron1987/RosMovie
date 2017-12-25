@@ -1,5 +1,18 @@
-﻿@{
+﻿@model IEnumerable<RosMovies.Models.Movie>
+
+@{
     ViewBag.Title = "Home Page";
+}
+
+@foreach(var movie in Model)
+{
+    <div>@movie.Name</div>
+    <hr/>
+    <div>@movie.Description</div>
+    <hr/>
+    <div>@movie.Director</div>
+    <hr/>
+    <div>@movie.Actors</div>
 }
 
 <div class="jumbotron">

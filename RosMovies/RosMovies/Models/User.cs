@@ -19,27 +19,33 @@ namespace RosMovies.Models
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
-            [Required(ErrorMessage = "Введите отчество")]
-            [Display(Name = "Отчество")]
-            public string MiddleName { get; set; }
+        //[Required(ErrorMessage = "Введите отчество")]
+        //[Display(Name = "Отчество")]
+        //public string MiddleName { get; set; }
 
-            [Required(ErrorMessage = "Введите Email")]
-            [Display(Name = "Email")]
-            [EmailAddress]
-            public string Mail { get; set; }
+        [Required(ErrorMessage = "Введите Email")]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Mail { get; set; }
 
-            [Required(ErrorMessage = "Введите телефон")]
-            [Display(Name = "Телефон")]
-            [Phone]
-            public string Phone { get; set; }
+        //[Required(ErrorMessage = "Введите телефон")]
+        //[Display(Name = "Телефон")]
+        //[Phone]
+        //public string Phone { get; set; }
 
-            [Required(ErrorMessage = "Введите город")]
-            [Display(Name = "Город")]
-            public string City { get; set; }
+        //[Required(ErrorMessage = "Введите город")]
+        //[Display(Name = "Город")]
+        //public string City { get; set; }
 
-            [Required(ErrorMessage = "Введите пароль")]
+        [Required(ErrorMessage = "Введите пароль")]
             [Display(Name = "Пароль")]
             public string Password { get; set; }
+
+        public bool Moderator { get; set; }
+
+        public List<Movie> FavoriteMovies { get; set; }
+
+        
 
     }
 }

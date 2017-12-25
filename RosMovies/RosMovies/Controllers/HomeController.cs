@@ -10,7 +10,9 @@ namespace RosMovies.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            RosMoviesModel db = new RosMoviesModel();
+
+            return View(db.Movies);
         }
 
         public ActionResult About()
