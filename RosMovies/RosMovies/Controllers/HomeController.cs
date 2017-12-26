@@ -8,9 +8,11 @@ namespace RosMovies.Controllers
 {
     public class HomeController : Controller
     {
+        RosMoviesModel db = new RosMoviesModel();
+
         public ActionResult Index()
         {
-            RosMoviesModel db = new RosMoviesModel();
+            
 
             return View(db.Movies);
         }

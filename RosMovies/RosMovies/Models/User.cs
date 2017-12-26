@@ -45,6 +45,8 @@ namespace RosMovies.Models
 
         public List<Movie> FavoriteMovies { get; set; }
 
+        //public  List<Review> Reviews { get; set; }
+
         
 
     }
