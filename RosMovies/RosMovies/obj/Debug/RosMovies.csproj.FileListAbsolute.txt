@@ -44,3 +44,6 @@ C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.csprojResolveAss
 C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.csproj.CoreCompileInputs.cache
 C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.dll
 C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.pdb
+C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.InitialCreate.resources
+C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.csproj.GenerateResource.Cache
+C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.MigrateDB.resources
