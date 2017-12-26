@@ -1,0 +1,69 @@
+﻿@model RosMovies.Models.User
+@{
+    ViewBag.Title = "Registration";
+}
+
+<body>
+    <div id="back-layer">
+        @*@{Html.RenderAction("RenderHeader", "Home");}*@
+        <section class="registration-index background-main">
+            <div class="registration-box container">
+                @using (Html.BeginForm("Registration", "Home", FormMethod.Post, new { @class = "form-horizontal registration-form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 form-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-text" })
+                        </div>
+                        <div class="col-sm-offset-3 col-sm-9">
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-text" })
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-9">
+                                @Html.ValidationMessageFor(m => m.LastName)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Mail, new { @class = "col-sm-4 form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Mail, new { @class = "form-text" })
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-9">
+                                @Html.ValidationMessageFor(m => m.Mail)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 form-label" })
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-text" })
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-8">
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 form-input">
+                                <input class="form-btn" type="submit" id="Register" name="Register" value="Зарегистрироваться" />
+                            </div>
+                        </div>
+                    //@Html.AntiForgeryToken()
+                }
+            </div>
+        </section>
+        @*@{Html.RenderPartial("footer");}*@
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/jqueryval");
+
+    </div>
+</body>
+
+
+
