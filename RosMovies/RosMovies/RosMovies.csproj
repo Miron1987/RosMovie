@@ -237,6 +237,8 @@
     <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\Movie\AddMovie.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Movie\MovieList.cshtml" />
+    <Content Include="Views\Movie\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,7 @@
 ﻿using RosMovies.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -67,9 +68,36 @@ namespace RosMovies.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult MovieList()
         {
-            return View();
+            return View(db.Movies);
+        }
+
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            List<Movie> movies = db.Movies
+                .Where(x => x.Id == id)
+                .Include(x => x.Reviews.Select(e => e.UserId))
+                .Include(x => x.Reviews.Select(e => e.MovieId))
+                .Include(x => x.Reviews.Select(e => e.MovieReview))
+                .Select(x => x.Reviews.Select(m => m.MovieId == id))
+                .ToList();
+
+
+
+                   //    List<Bet> bets = db.Bets
+                   //        .Where(x => x.UserId == existingUser.Id)
+                   //        .Include(x => x.BetEvents)
+                   //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
+                   //        .Include(x => x.BetEvents.Select(e => e.Event))
+                   //        .Include(x => x.BetEvents.Select((b => b.Match)))
+                   //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
+                   //        .ToList();
+                   //    switch (type)
+
+            return View(movies);
         }
     }
 }
