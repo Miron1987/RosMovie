@@ -25,7 +25,7 @@ namespace RosMovies.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var existingUser = db.Users.FirstOrDefault(u => u.Mail == user.Mail);
+            var existingUser = db.Users.FirstOrDefault(u => u.Mail == User.Identity.Name);
             if (existingUser.Moderator != true)
             {
                 return View("Index", "Home");
@@ -38,10 +38,37 @@ namespace RosMovies.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Registration(Movie movie)
+        public ActionResult AddMovie(Movie movie)
         {
-            //сделать возможность добавлять фильмы
+            if (ModelState.IsValid)
+            {
+                var existingMovie = db.Movies.FirstOrDefault(m => m.Name == movie.Name);
 
+                if (existingMovie == null)
+                {
+                    db.Movies.Add(new Movie
+                    {
+                        Name = movie.Name,
+                        Director = movie.Director,
+                        Actors = movie.Actors,
+                        Genre = movie.Genre,
+                        Description = movie.Description
+                    });
+                db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Этот фильм уже есть в базе");
+                    return View("AddMovie", "Movie");
+                }
+            }
+
+            return View();
+        }
+
+        public ActionResult MovieList()
+        {
             return View();
         }
     }

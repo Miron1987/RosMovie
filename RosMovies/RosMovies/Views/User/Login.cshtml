@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+@model RosMovies.Models.Account.UserLogin
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Логин</title>
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <div id="back-layer">
+        <section class="login-index background-main">
+            <div class="login-box container">
+                @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "form-horizontal login-form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Login, new { @class = "col-sm-4 form-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Login, new { @class = "form-text" })
+                        </div>
+                        <div class="col-sm-offset-4 col-sm-8">
+                            @Html.ValidationMessageFor(m => m.Login)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 form-label" })
+                        <div class="col-sm-8">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-text" })
+                        </div>
+                        <div class="col-sm-offset-4 col-sm-8">
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 form-input">
+                            <input class="form-btn" type="submit" id="Login" name="Login" value="Войти" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Bundles/jqueryval")
+    </div>
+</body>
+</html>
+

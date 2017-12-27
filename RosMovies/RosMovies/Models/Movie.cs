@@ -27,5 +27,8 @@ namespace RosMovies.Models
 
         public List<Review> Reviews { get; set; }
 
+        public List<User> Users { get; }
+
+
     }
 }

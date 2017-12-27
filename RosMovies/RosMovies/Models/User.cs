@@ -43,7 +43,7 @@ namespace RosMovies.Models
 
         public bool Moderator { get; set; }
 
-        public List<Movie> FavoriteMovies { get; set; }
+        public List<Movie> Movies { get; set; }
 
         //public  List<Review> Reviews { get; set; }
 

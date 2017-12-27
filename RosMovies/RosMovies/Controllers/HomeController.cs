@@ -15,7 +15,6 @@ namespace RosMovies.Controllers
         public ActionResult Index()
         {
             
-
             return View(db.Movies);
         }
 
