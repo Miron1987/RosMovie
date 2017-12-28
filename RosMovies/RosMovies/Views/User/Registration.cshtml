@@ -21,15 +21,15 @@
                             @Html.ValidationMessageFor(m => m.FirstName)
                         </div>
                     </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 form-label" })
-                            <div class="col-sm-8">
-                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-text" })
-                            </div>
-                            <div class="col-sm-offset-3 col-sm-9">
-                                @Html.ValidationMessageFor(m => m.LastName)
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 form-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-text" })
                         </div>
+                        <div class="col-sm-offset-3 col-sm-9">
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </div>
+                    </div>
                         <div class="form-group">
                             @Html.LabelFor(m => m.Mail, new { @class = "col-sm-4 form-label" })
                             <div class="col-sm-8">
@@ -64,6 +64,3 @@
 
     </div>
 </body>
-
-
-

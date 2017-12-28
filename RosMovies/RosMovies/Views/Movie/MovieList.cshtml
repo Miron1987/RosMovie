@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RosMovies.Models.Movie>
+
+@{
+    ViewBag.Title = "MovieList";
+}
+
+<h2>MovieList</h2>
+
+
+
+<div>
+    @foreach (var movie in Model)
+    {
+        <hr/>
+        <div class="container">
+            <div class="col-md-2">@movie.Name</div>
+            <div class="col-md-2">@movie.Description</div>
+            <div class="col-md-2">@movie.Director</div>
+            <div class="col-md-2">@movie.Actors</div>
+            <div class="col-md-2">@movie.Genre</div>
+            <div class="col-md-2">
+                @Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

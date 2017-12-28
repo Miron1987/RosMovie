@@ -60,6 +60,48 @@ namespace RosMovies.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        [HttpGet]
+        public ActionResult Registration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registration(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = db.Users.FirstOrDefault(u => u.Mail == user.Mail);
+
+                if (existingUser == null)
+                {
+                    db.Users.Add(new User
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Mail = user.Mail,
+                        Password = user.Password,
+                        Moderator = false
+                    });
+                    db.SaveChanges();
+                    FormsAuthentication.SetAuthCookie(user.Mail, true);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Пользователь с таким e-mail уже существует");
+                    return View(user);
+                }
+            }
+            else
+            {
+                return View(user);
+            }
+        }
+
+
         [HttpGet]
         public ActionResult Details()
         {

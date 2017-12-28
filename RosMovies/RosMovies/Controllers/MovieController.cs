@@ -71,33 +71,60 @@ namespace RosMovies.Controllers
         [HttpGet]
         public ActionResult MovieList()
         {
+
+            return View(results.ToPagedList(pageNumber, pageSize));
+            //return View(db.Movies);
+        }
+
+
+        [HttpPost]
+        public ActionResult MovieList(string name = "Все", string genre = "Все", string director = "Все", string actor = "Все")
+        {
+
+
             return View(db.Movies);
         }
+
+
+
+
+
 
         [HttpGet]
         public ActionResult Details(int? id)
         {
-            List<Movie> movies = db.Movies
-                .Where(x => x.Id == id)
-                .Include(x => x.Reviews.Select(e => e.UserId))
-                .Include(x => x.Reviews.Select(e => e.MovieId))
-                .Include(x => x.Reviews.Select(e => e.MovieReview))
-                .Select(x => x.Reviews.Select(m => m.MovieId == id))
+            //List<Movie> movies = db.Movies
+            //    .Where(x => x.Id == id)
+            //    .Include(x => x.Reviews)
+                //.Include(x => x.Reviews.Select(b => b.UserId))
+                //.Include(x => x.Reviews.Select(t => t.MovieId))
+                //.Include(x => x.Reviews.Select(e => e.MovieReview))
+                //.ToList();
+
+
+
+            List<Review> reviews = db.Reviews
+                .Where(y => y.MovieId == id)
                 .ToList();
 
 
 
-                   //    List<Bet> bets = db.Bets
-                   //        .Where(x => x.UserId == existingUser.Id)
-                   //        .Include(x => x.BetEvents)
-                   //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
-                   //        .Include(x => x.BetEvents.Select(e => e.Event))
-                   //        .Include(x => x.BetEvents.Select((b => b.Match)))
-                   //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
-                   //        .ToList();
-                   //    switch (type)
+            //results = results
+            //      .Where(y => y.Date.Value.Date >= date1.Value.Date)
+            //      .Where(y => y.Date.Value.Date <= date2.Value.Date)
+            //      .ToList();
 
-            return View(movies);
+            //    List<Bet> bets = db.Bets
+            //        .Where(x => x.UserId == existingUser.Id)
+            //        .Include(x => x.BetEvents)
+            //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
+            //        .Include(x => x.BetEvents.Select(e => e.Event))
+            //        .Include(x => x.BetEvents.Select((b => b.Match)))
+            //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
+            //        .ToList();
+            //    switch (type)
+
+            return View(reviews);
         }
     }
 }
