@@ -72,8 +72,8 @@ namespace RosMovies.Controllers
         public ActionResult MovieList()
         {
 
-            return View(results.ToPagedList(pageNumber, pageSize));
-            //return View(db.Movies);
+            //return View(results.ToPagedList(pageNumber, pageSize));
+            return View(db.Movies);
         }
 
 

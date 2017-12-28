@@ -34,15 +34,16 @@ namespace RosMovies.Controllers
                     ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
                     return View(user);
                 }
-                //else if (user.Login == "admin@rosbets.ru" && existingUser != null)
+                //else if (user.Login == true && existingUser != null)
                 //{
                 //    FormsAuthentication.SetAuthCookie(user.Login, true);
                 //    return RedirectToAction("Index", "Admin");
                 //}
                 else
                 {
+                    var id = existingUser.Id;
                     FormsAuthentication.SetAuthCookie(user.Login, true);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Details", "User");
                 }
             }
             else
@@ -64,6 +65,10 @@ namespace RosMovies.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -120,115 +125,49 @@ namespace RosMovies.Controllers
             return View(user);
         }
 
-        public ActionResult Story(int? id)
+       
+
+        public ActionResult FavoriteMovies()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            if (id == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
-            return View();
+            User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
+
+            return View(user);
         }
 
-        //public ActionResult FavoriteMovies(string name, string results)
-        //{
+        //[HttpPost]
+        public ActionResult AddFavorite(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
 
+            if (id == null)
+            {
+                return View("Index", "Home");
+            }
 
-        //    var existingUser = db.Users.FirstOrDefault(u => u.Mail == User.Identity.Name);
+            User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
+            Movie movie = db.Movies.FirstOrDefault(x => x.Id == id);
 
-        //    IEnumerable<User> favoriteMovies = db.Users
-        //        .Where(x => x.Id == existingUser.Id)
-        //        .Include(x => x.Movies)
-        //        .Where(x => x.FavoriteMovies == name)
-        //        .ToList();
+            if (db.Movies.Contains(movie))
+            {
+                user.Movies.Remove(movie);
+                db.SaveChanges();
 
+                return RedirectToAction("MovieList", "Movie");
+            }
+            user.Movies.Add(movie);
+            db.SaveChanges();
 
-
-
-
-
-
-        //    List<Bet> bets = db.Bets
-        //        .Where(x => x.UserId == existingUser.Id)
-        //        .Include(x => x.BetEvents)
-        //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
-        //        .Include(x => x.BetEvents.Select(e => e.Event))
-        //        .Include(x => x.BetEvents.Select((b => b.Match)))
-        //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
-        //        .ToList();
-        //    switch (type)
-        //    {
-        //        case "ordinary":
-        //            bets = bets.Where(x => x.BetEvents.Count == 1).ToList();
-        //            break;
-        //        case "express":
-        //            bets = bets.Where(x => x.BetEvents.Count > 1).ToList();
-        //            break;
-        //    }
-
-        //    switch (results)
-        //    {
-        //        case "positive":
-        //            bets = bets.Where(x => x.Success == true).ToList();
-        //            break;
-        //        case "negative":
-        //            bets = bets.Where(x => x.Success == false).ToList();
-        //            break;
-        //        case "awaiting":
-        //            bets = bets.Where(x => x.Success == null).ToList();
-        //            break;
-        //    }
-
-        //    return PartialView("_HistoryTable", bets);
-
-        //}
-
-
-        //public ActionResult CategorySearch(string type, string results)
-        //{
-
-
-        //    var existingUser = db.Users.FirstOrDefault(u => u.Mail == User.Identity.Name);
-
-        //    List<Bet> bets = db.Bets
-        //        .Where(x => x.UserId == existingUser.Id)
-        //        .Include(x => x.BetEvents)
-        //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
-        //        .Include(x => x.BetEvents.Select(e => e.Event))
-        //        .Include(x => x.BetEvents.Select((b => b.Match)))
-        //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
-        //        .ToList();
-        //    switch (type)
-        //    {
-        //        case "ordinary":
-        //            bets = bets.Where(x => x.BetEvents.Count == 1).ToList();
-        //            break;
-        //        case "express":
-        //            bets = bets.Where(x => x.BetEvents.Count > 1).ToList();
-        //            break;
-        //    }
-
-        //    switch (results)
-        //    {
-        //        case "positive":
-        //            bets = bets.Where(x => x.Success == true).ToList();
-        //            break;
-        //        case "negative":
-        //            bets = bets.Where(x => x.Success == false).ToList();
-        //            break;
-        //        case "awaiting":
-        //            bets = bets.Where(x => x.Success == null).ToList();
-        //            break;
-        //    }
-
-        //    return PartialView("_HistoryTable", bets);
-
-        //}
+            return RedirectToAction("MovieList", "Movie");
+        }
 
         protected override void Dispose(bool disposing)
         {

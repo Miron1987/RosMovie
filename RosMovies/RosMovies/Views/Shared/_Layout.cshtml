@@ -20,12 +20,35 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Login", "Login", "User")</li>
+                    @*<li>@Html.ActionLink("Login", "Login", "User")</li>
                     <li>@Html.ActionLink("Registration", "Registration", "User")</li>
-                    <li>@Html.ActionLink("List", "MovieList", "Movie")</li>
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("List", "MovieList", "Movie")</li>*@
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            @*<strong>@Html.Encode(User.Identity.Name)</strong>*@
+                            @*<li>@Html.ActionLink("Log Out", "Logout", "User")</li>*@
+                            <li>@Html.ActionLink("List", "MovieList", "Movie")</li>
+                            <li>
+                                    @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                                     {
+                                         @Html.AntiForgeryToken()
+                                        <input type="submit" value="Отправить"/>
+                                    }    
+                            </li>
+
+
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Login", "Login", "User")</li>
+                            <li>@Html.ActionLink("Registration", "Registration", "User")</li>
+                            <li>@Html.ActionLink("List", "MovieList", "Movie")</li>
+
+                        }
+
+
+
                 </ul>
             </div>
         </div>

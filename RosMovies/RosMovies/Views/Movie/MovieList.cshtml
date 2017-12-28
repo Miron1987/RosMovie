@@ -6,7 +6,12 @@
 
 <h2>MovieList</h2>
 
-
+<div class="container">
+    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+</div>
 
 <div>
     @foreach (var movie in Model)
@@ -15,11 +20,23 @@
         <div class="container">
             <div class="col-md-2">@movie.Name</div>
             <div class="col-md-2">@movie.Description</div>
-            <div class="col-md-2">@movie.Director</div>
+            <div class="col-md-1">@movie.Director</div>
             <div class="col-md-2">@movie.Actors</div>
-            <div class="col-md-2">@movie.Genre</div>
+            <div class="col-md-1">@movie.Genre</div>
             <div class="col-md-2">
                 @Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)
+            </div>
+            <div class="col-md-2">
+                @if (Request.IsAuthenticated)
+                    {
+                       @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { id = @movie.Id }))
+                       {
+                        <input type="submit" value="В избранное" />
+                       }*@
+
+
+                        @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id}, new { id = movie.Id})  @*, null)*@
+                    }
             </div>
         </div>
     }

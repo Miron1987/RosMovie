@@ -45,6 +45,11 @@ namespace RosMovies.Models
 
         public List<Movie> Movies { get; set; }
 
+        public User()
+        {
+            Movies = new List<Movie>();
+        }
+
         //public  List<Review> Reviews { get; set; }
 
         

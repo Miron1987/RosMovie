@@ -178,6 +178,14 @@
     <Compile Include="Migrations\201712271105121_Second.Designer.cs">
       <DependentUpon>201712271105121_Second.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712281751016_Third.cs" />
+    <Compile Include="Migrations\201712281751016_Third.Designer.cs">
+      <DependentUpon>201712281751016_Third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712282007050_Fourth.cs" />
+    <Compile Include="Migrations\201712282007050_Fourth.Designer.cs">
+      <DependentUpon>201712282007050_Fourth.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\UserLogin.cs" />
     <Compile Include="Models\Review.cs" />
@@ -239,6 +247,8 @@
     <Content Include="Views\Movie\MovieList.cshtml" />
     <Content Include="Views\Movie\Details.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\FavoriteMovies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -268,6 +278,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712271105121_Second.resx">
       <DependentUpon>201712271105121_Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712281751016_Third.resx">
+      <DependentUpon>201712281751016_Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712282007050_Fourth.resx">
+      <DependentUpon>201712282007050_Fourth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

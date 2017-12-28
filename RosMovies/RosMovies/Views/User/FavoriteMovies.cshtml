@@ -1,0 +1,15 @@
+﻿@using RosMovies.Models
+@model User
+@{
+    ViewBag.Title = "FavoriteMovies";
+}
+
+<h2>FavoriteMovies</h2>
+
+@if (Model.Movies.Count() > 0)
+{
+    foreach (Movie movie in Model.Movies)
+    {
+        @movie.Name
+    }
+}
