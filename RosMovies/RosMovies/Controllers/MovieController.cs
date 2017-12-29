@@ -96,12 +96,14 @@ namespace RosMovies.Controllers
             //List<Movie> movies = db.Movies
             //    .Where(x => x.Id == id)
             //    .Include(x => x.Reviews)
-                //.Include(x => x.Reviews.Select(b => b.UserId))
-                //.Include(x => x.Reviews.Select(t => t.MovieId))
-                //.Include(x => x.Reviews.Select(e => e.MovieReview))
-                //.ToList();
+            //.Include(x => x.Reviews.Select(b => b.UserId))
+            //.Include(x => x.Reviews.Select(t => t.MovieId))
+            //.Include(x => x.Reviews.Select(e => e.MovieReview))
+            //.ToList();
 
-
+            ViewBag.movie = db.Movies.
+                Where(y => y.Id == id)
+                .ToList();
 
             List<Review> reviews = db.Reviews
                 .Where(y => y.MovieId == id)

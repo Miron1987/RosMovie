@@ -10,10 +10,22 @@
 
 @*@Model.Name*@
 
-@*@foreach(var movie in Model)
+@foreach (var movie in ViewBag.movie)
 {
-    @foreach(var rew in movie.Reviews)
-    {
-        @rew.MovieReview
-    }
+    @movie.Name
+}
+
+@foreach(var review in Model)
+{
+    @review.MovieReview
+}
+
+@*@using (Html.BeginForm())
+{
+    <input type="hidden" value="@ViewBag.BookId" name="BookId" />
+        <p>Введите свое имя: </p>
+        @Html.TextBox("Person", "Введите имя")
+        <p>Введите адрес :</p>
+        @Html.TextBox("Address", "Введите адрес")
+        <p><input type="submit" value="Отправить" /></p>
 }*@

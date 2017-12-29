@@ -29,13 +29,13 @@
             <div class="col-md-2">
                 @if (Request.IsAuthenticated)
                     {
-                       @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { id = @movie.Id }))
+                       @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
                        {
                         <input type="submit" value="В избранное" />
                        }*@
 
 
-                        @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id}, new { id = movie.Id})  @*, null)*@
+                        @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id}, new { id = movie.Id}) 
                     }
             </div>
         </div>
