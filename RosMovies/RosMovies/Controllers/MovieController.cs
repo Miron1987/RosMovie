@@ -128,5 +128,20 @@ namespace RosMovies.Controllers
 
             return View(reviews);
         }
+
+        [HttpPost]
+        public ActionResult Details(Review review)
+        {
+            db.Reviews.Add(new Review
+            {
+                MovieId = review.MovieId,
+                UserId = review.UserId,
+                MovieReview = review.MovieReview,
+                Score = review.Score
+            });
+            db.SaveChanges();
+
+            return RedirectToAction("MovieList","Movie");
+        }
     }
 }

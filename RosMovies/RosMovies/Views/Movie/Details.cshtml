@@ -20,12 +20,12 @@
     @review.MovieReview
 }
 
-@*@using (Html.BeginForm())
-{
-    <input type="hidden" value="@ViewBag.BookId" name="BookId" />
-        <p>Введите свое имя: </p>
-        @Html.TextBox("Person", "Введите имя")
-        <p>Введите адрес :</p>
-        @Html.TextBox("Address", "Введите адрес")
-        <p><input type="submit" value="Отправить" /></p>
-}*@
+@*@using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { movie = @movie })))
+    {
+        <input type="hidden" value="@ViewBag.BookId" name="BookId" />
+            <p>Введите свое имя: </p>
+            @Html.TextBox("Person", "Введите имя")
+            <p>Введите адрес :</p>
+            @Html.TextBox("Address", "Введите адрес")
+            <p><input type="submit" value="Отправить" /></p>
+    }*@
