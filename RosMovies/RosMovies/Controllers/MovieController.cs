@@ -93,6 +93,11 @@ namespace RosMovies.Controllers
         [HttpGet]
         public ActionResult Details(int? id)
         {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
             //List<Movie> movies = db.Movies
             //    .Where(x => x.Id == id)
             //    .Include(x => x.Reviews)
@@ -101,30 +106,19 @@ namespace RosMovies.Controllers
             //.Include(x => x.Reviews.Select(e => e.MovieReview))
             //.ToList();
 
-            ViewBag.movie = db.Movies.
-                Where(y => y.Id == id)
-                .ToList();
+            //ViewBag.movie = db.Movies.
+            //    Where(y => y.Id == id)
+            //    .ToList();
+            User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
+
+            Movie myMovie = db.Movies.FirstOrDefault(x => x.Id == id);
+
+            ViewBag.User = user;
+            ViewBag.Movie = myMovie;
 
             List<Review> reviews = db.Reviews
                 .Where(y => y.MovieId == id)
                 .ToList();
-
-
-
-            //results = results
-            //      .Where(y => y.Date.Value.Date >= date1.Value.Date)
-            //      .Where(y => y.Date.Value.Date <= date2.Value.Date)
-            //      .ToList();
-
-            //    List<Bet> bets = db.Bets
-            //        .Where(x => x.UserId == existingUser.Id)
-            //        .Include(x => x.BetEvents)
-            //        .Include(x => x.BetEvents.Select(e => e.BetEventStatus))
-            //        .Include(x => x.BetEvents.Select(e => e.Event))
-            //        .Include(x => x.BetEvents.Select((b => b.Match)))
-            //        .Include(x => x.BetEvents.Select(v => v.Match.Championship))
-            //        .ToList();
-            //    switch (type)
 
             return View(reviews);
         }
@@ -132,10 +126,18 @@ namespace RosMovies.Controllers
         [HttpPost]
         public ActionResult Details(Review review)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
             db.Reviews.Add(new Review
             {
                 MovieId = review.MovieId,
-                UserId = review.UserId,
+                //UserId = review.UserId,
+                UserName = review.UserName,
+                UserLastName = review.UserLastName,
+                DateCom = review.DateCom,
                 MovieReview = review.MovieReview,
                 Score = review.Score
             });

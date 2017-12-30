@@ -9,23 +9,45 @@
 <h2>Details</h2>
 
 @*@Model.Name*@
+<div>@ViewBag.Movie.Name</div>
 
-@foreach (var movie in ViewBag.movie)
-{
-    @movie.Name
-}
 
 @foreach(var review in Model)
 {
-    @review.MovieReview
+    <div class="container">
+        <p>
+        <div class="text">
+            @review.MovieReview
+        </div>
+        <div class="info">
+            <div class="container">
+                <div class="col-md-1">@review.UserName</div>
+                <div class="col-md-1">@review.UserLastName</div>
+                <div class="col-md-1">@review.DateCom</div>
+            </div>
+        </div>
+        </p>
+    </div>
+    
 }
 
-@*@using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { movie = @movie })))
+@using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { review = new Review { } }))
     {
-        <input type="hidden" value="@ViewBag.BookId" name="BookId" />
-            <p>Введите свое имя: </p>
-            @Html.TextBox("Person", "Введите имя")
+            <input type="hidden" value="@ViewBag.Movie.Id" name="MovieId" />
+            <input type="hidden" value="@ViewBag.User.FirstName" name="UserName" />
+            <input type="hidden" value="@ViewBag.User.LastName" name="UserLastName" />
+            <input type="hidden" value="@DateTime.Now" name="DateCom" />
+            <p>Комментарий: </p>
+            @Html.TextBox("MovieReview", "Ваш комментарий", new { @class = "myClass", id = "myId" })
+            @*<div>
+                @Html.ValidationMessageFor(x => x.)
+            </div>*@
             <p>Введите адрес :</p>
-            @Html.TextBox("Address", "Введите адрес")
-            <p><input type="submit" value="Отправить" /></p>
-    }*@
+            @Html.ListBox("Score", new MultiSelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
+            @*@Html.TextArea("text", "привет <br /> мир", 5, 50, null)*@
+            <p class="myButtom" id="myButtomId"><input type="submit" value="Отправить" /></p>
+    }
+
+@section Scripts {
+    @Scripts.Render("~/scripts/valid.js")
+}

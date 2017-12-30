@@ -51,7 +51,7 @@ namespace RosMovies
 
             db.Users.Add(new User { FirstName = "Александр", LastName = "Пушкин", Mail = "mail@mail.ru", Password = "123456", Moderator = true });
             db.Movies.Add(new Movie { Name = "Спасти рядового Райана", Director = "Спилберг", Actors = "Хэнкс", Description = "Спасают солдата", Genre = "Драма" });
-            db.Reviews.Add(new Review { MovieId = 1, Score = 6, UserId = 1, MovieReview = "Неплохое кино" });
+            //db.Reviews.Add(new Review { MovieId = 1, Score = 6, UserId = 1, MovieReview = "Неплохое кино" });
 
             base.Seed(db);
         }

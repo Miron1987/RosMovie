@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201712282007050_Fourth.Designer.cs">
       <DependentUpon>201712282007050_Fourth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712301612131_Fourth1.cs" />
+    <Compile Include="Migrations\201712301612131_Fourth1.Designer.cs">
+      <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\UserLogin.cs" />
     <Compile Include="Models\Review.cs" />
@@ -219,6 +223,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\valid.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -284,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712282007050_Fourth.resx">
       <DependentUpon>201712282007050_Fourth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712301612131_Fourth1.resx">
+      <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
