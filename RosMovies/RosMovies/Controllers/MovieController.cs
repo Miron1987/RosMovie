@@ -86,29 +86,10 @@ namespace RosMovies.Controllers
         }
 
 
-
-
-
-
         [HttpGet]
         public ActionResult Details(int? id)
         {
 
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("MovieList", "Movie");
-            }
-            //List<Movie> movies = db.Movies
-            //    .Where(x => x.Id == id)
-            //    .Include(x => x.Reviews)
-            //.Include(x => x.Reviews.Select(b => b.UserId))
-            //.Include(x => x.Reviews.Select(t => t.MovieId))
-            //.Include(x => x.Reviews.Select(e => e.MovieReview))
-            //.ToList();
-
-            //ViewBag.movie = db.Movies.
-            //    Where(y => y.Id == id)
-            //    .ToList();
             User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
 
             Movie myMovie = db.Movies.FirstOrDefault(x => x.Id == id);

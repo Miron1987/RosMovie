@@ -31,23 +31,25 @@
     
 }
 
-@using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { review = new Review { } }))
-    {
-            <input type="hidden" value="@ViewBag.Movie.Id" name="MovieId" />
-            <input type="hidden" value="@ViewBag.User.FirstName" name="UserName" />
-            <input type="hidden" value="@ViewBag.User.LastName" name="UserLastName" />
-            <input type="hidden" value="@DateTime.Now" name="DateCom" />
-            <p>Комментарий: </p>
-            @Html.TextBox("MovieReview", "Ваш комментарий", new { @class = "myClass", id = "myId" })
-            @*<div>
-                @Html.ValidationMessageFor(x => x.)
-            </div>*@
-            <p>Введите адрес :</p>
-            @Html.ListBox("Score", new MultiSelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
-            @*@Html.TextArea("text", "привет <br /> мир", 5, 50, null)*@
-            <p class="myButtom" id="myButtomId"><input type="submit" value="Отправить" /></p>
-    }
+@if (Request.IsAuthenticated)
+{
+
+    using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { review = new Review { } }))
+        {
+                <input type="hidden" value="@ViewBag.Movie.Id" name="MovieId" />
+                <input type="hidden" value="@ViewBag.User.FirstName" name="UserName" />
+                <input type="hidden" value="@ViewBag.User.LastName" name="UserLastName" />
+                <input type="hidden" value="@DateTime.Now" name="DateCom" />
+                <p>Комментарий: </p>
+                @*@Html.TextBox("MovieReview", "Ваш комментарий", new { @class = "myId", id = "myId" })*@
+                @Html.TextArea("MovieReview", "Введите не более 250 символов", 15, 250, new { @class = "myId", id = "myId" })
+                <p>Введите адрес :</p>
+                @Html.ListBox("Score", new MultiSelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }))
+
+                <p><input type="submit" value="Отправить" id="myButtomId"  class="myButtomId" /></p>
+        }
+}
 
 @section Scripts {
-    @Scripts.Render("~/scripts/valid.js")
+    @Scripts.Render("~/Scripts/valid.js")
 }
