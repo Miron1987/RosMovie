@@ -1,22 +1,44 @@
 ﻿$(document).ready(function () {
     $('#mySearch').on('keyup paste', function () {
-        //console.log($(this).val());
-        var obj = { myQuery: $(this).val() };
         console.log($(this).val());
+        var obj = {
+            
+            page: $('#myPage').val(),
+            quest: $('#QueryValues').val(),
+            myQuery: $('#mySearch').val()
+            };
+        console.log(obj);
         $.ajax({
             type: 'POST',
-            url: '/Movie/NewMovieList',
+            url: '/Movie/MovieList',
             data: JSON.stringify(obj),
             contentType: 'application/json; charset=UTF-8',
             success: function (response) {
-                console.log(response)
+                //console.log(response)
             },
             error: function (response) {
-                console.log(response)
+                //console.log(response)
             }
         });
     });
 });
+
+
+
+    //    function createTr(product) {
+    //        return '<tr><th>' +
+    //            product.Name + '</th><th>' + product.Price + '</th><th>' + product.Category + '</th><td>' +
+    //            '</th><td> <a href="/Products/Buy/' +
+    //        product.Id +
+    //            '">Buy</a> |<a href="/Products/Edit/' +
+    //        product.Id +
+    //            '">Edit</a> |<a href="/Products/Details/' +
+    //    product.Id +
+    //            '">Details</a> | <a href="/Products/Delete/' +
+    //    product.Id +
+    //'">Delete</a> </td></tr>';
+
+    //    }
 
 
 

@@ -10,10 +10,18 @@
 <h2>MovieList</h2>
 
 <div class="container">
-    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    @*<div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>*@
+    <div class="col-md-3">
+        <select id="QueryValues" name="QueryValues">
+            <option value="name" type ="selected">Название фильма</option>
+            <option value="director">Режиссер</option>
+            <option value="actor">Актеры</option>
+            <option value="genre">Жанр</option>
+        </select>
+    </div>
+    <div class="col-md-3" id="Search"><input class="form-control" style="margin: 10px" id="mySearch" name="Search" type="text" /></div>
+    <div  class="col-md-3"><input type="submit" value=@ViewBag.Page id="myPage" class="myPage" />@ViewBag.Page</div>
+
+
 </div>
 
 
@@ -34,7 +42,7 @@
             <div class="col-md-2">
                 @if (Request.IsAuthenticated)
                     {
-                       @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
+                       using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
                        {
                         <input type="submit" value="В избранное" />
                        }
