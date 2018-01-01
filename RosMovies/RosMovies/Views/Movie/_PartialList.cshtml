@@ -1,0 +1,38 @@
+﻿@*@model IEnumerable<RosMovies.Models.Movie>*@
+@model PagedList.IPagedList<RosMovies.Models.Movie>
+@using PagedList.Mvc;
+
+<div>
+    @foreach (var movie in Model)
+    {
+        <hr />
+        <div class="container">
+            <div class="col-md-2">@movie.Name</div>
+            <div class="col-md-2">@movie.Description</div>
+            <div class="col-md-1">@movie.Director</div>
+            <div class="col-md-2">@movie.Actors</div>
+            <div class="col-md-1">@movie.Genre</div>
+            <div class="col-md-2">
+                @Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)
+            </div>
+            <div class="col-md-2">
+                @if (Request.IsAuthenticated)
+                {
+                    @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
+                        {
+                         <input type="submit" value="В избранное" />
+                        }*@
+
+
+                    @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id }, new { id = movie.Id })
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("MovieList", "Movie", new { page }))
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/Scripts/MyListScript.js")

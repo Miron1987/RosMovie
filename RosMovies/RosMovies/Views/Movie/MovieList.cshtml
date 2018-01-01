@@ -1,4 +1,7 @@
-﻿@model IEnumerable<RosMovies.Models.Movie>
+﻿@*@model IEnumerable<RosMovies.Models.Movie>*@
+
+@model PagedList.IPagedList<RosMovies.Models.Movie>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "MovieList";
@@ -7,13 +10,15 @@
 <h2>MovieList</h2>
 
 <div class="container">
-    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
-    <div class="col-md-3"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    @*<div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>
+    <div class="col-md-3" id="mySearch"><input class="form-control" style="margin: 10px" id="Search" name="Search" type="text" /></div>*@
 </div>
 
-<div>
+
+@Html.Partial("_PartialList", Model)
+@*<div>
     @foreach (var movie in Model)
     {
         <hr/>
@@ -32,7 +37,7 @@
                        @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
                        {
                         <input type="submit" value="В избранное" />
-                       }*@
+                       }
 
 
                         @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id}, new { id = movie.Id}) 
@@ -40,7 +45,8 @@
             </div>
         </div>
     }
-</div>
+</div>*@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/Scripts/MyListScript.js")

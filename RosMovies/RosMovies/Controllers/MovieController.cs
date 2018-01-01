@@ -1,4 +1,5 @@
-﻿using RosMovies.Models;
+﻿using PagedList;
+using RosMovies.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -69,20 +70,52 @@ namespace RosMovies.Controllers
         }
 
         [HttpGet]
-        public ActionResult MovieList()
+        public ActionResult MovieList(int? page)
         {
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+
+            List<Movie> movie = db.Movies
+                    //.Where(x => x.Name == myQuery)
+                    .ToList();
+
 
             //return View(results.ToPagedList(pageNumber, pageSize));
-            return View(db.Movies);
+            return View(movie.ToPagedList(pageNumber, pageSize));
         }
 
 
         [HttpPost]
-        public ActionResult MovieList(string name = "Все", string genre = "Все", string director = "Все", string actor = "Все")
+        public ActionResult MovieList(int? page, string myQuery = "Все")
         {
 
+            ViewBag.MyQuery = myQuery;
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
-            return View(db.Movies);
+
+            List<Movie> movie = db.Movies
+                    //.Where(x => x.Name == myQuery)
+                    .ToList();
+
+            return View(movie.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        public ActionResult NewMovieList(int? page, string myQuery = "Все")
+        {
+
+            ViewBag.MyQuery = myQuery;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+
+            List<Movie> movie = db.Movies
+                    //.Where(x => x.Name == myQuery)
+                    .ToList();
+
+            return View("MovieList", movie.ToPagedList(pageNumber, pageSize));
         }
 
 
