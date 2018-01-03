@@ -3,8 +3,8 @@
         console.log($(this).val());
         var obj = {
             
-            page: $('#myPage').val(),
-            quest: $('#QueryValues').val(),
+            //page: $('#myPage').val(),
+            //quest: $('#QueryValues').val(),
             myQuery: $('#mySearch').val()
             };
         console.log(obj);

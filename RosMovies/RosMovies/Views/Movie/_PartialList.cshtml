@@ -1,6 +1,6 @@
-﻿@*@model IEnumerable<RosMovies.Models.Movie>*@
-@model PagedList.IPagedList<RosMovies.Models.Movie>
-@using PagedList.Mvc;
+﻿@model IEnumerable<RosMovies.Models.Movie>
+@*@model PagedList.IPagedList<RosMovies.Models.Movie>
+@using PagedList.Mvc;*@
 
 <div>
     @foreach (var movie in Model)
@@ -31,7 +31,7 @@
     }
 </div>
 
-@Html.PagedListPager(Model, page => Url.Action("MovieList", "Movie", new { page }))
+@*@Html.PagedListPager(Model, page => Url.Action("MovieList", "Movie", new { page }))*@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")

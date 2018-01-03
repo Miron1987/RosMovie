@@ -141,6 +141,8 @@ namespace RosMovies.Controllers
             //var existingUser = db.Users.FirstOrDefault(u => u.Mail == User.Identity.Name);
             User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
 
+            //List<Movie> movies = user.Movies;
+
             //List<User> user = db.Users
             //    .Where(x => x.Mail == User.Identity.Name)
             //    .Include(m => m.Movies)
@@ -168,7 +170,7 @@ namespace RosMovies.Controllers
             User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
             Movie movie = db.Movies.FirstOrDefault(x => x.Id == id);
 
-            if (user.Movies.Contains(movie) == true)
+            if (user.Movies.Contains<Movie>(movie))
             {
                 user.Movies.Remove(movie);
                 db.SaveChanges();

@@ -69,112 +69,47 @@ namespace RosMovies.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult MovieList(int? page)
+        public ActionResult MovieList(int? page, string quest = "name", string myQuery = "")
         {
-            int pageSize = 2;
+            int pageSize = 1;
             int pageNumber = (page ?? 1);
-            ViewBag.Page = page;
-
-            List<Movie> movie = db.Movies
-                    .OrderBy(x => x.Name)
-                    //.Where(x => x.Name == myQuery)
-                    .ToList();
-
-
-            //return View(results.ToPagedList(pageNumber, pageSize));
-            return View(movie.ToPagedList(pageNumber, pageSize));
-        }
-
-
-        [HttpPost]
-        public ActionResult MovieList(int page = 1, string quest = "All", string myQuery = "")
-        {
-            ViewBag.Page = page;
+            ViewBag.Quest = quest;
             ViewBag.MyQuery = myQuery;
-            int pageSize = 3;
-            int pageNumber = page;
-            //int pageNumber = (page ?? 1);
-
 
             List<Movie> movie = db.Movies
                     .OrderBy(x => x.Name)
-                    //.Where(x => x.Name == myQuery)
                     .ToList();
 
             switch (quest)
             {
                 case "name":
                     movie = movie
-                        .Where(x => x.Name == myQuery)
+                        .Where(x => x.Name.Contains(myQuery))
                         .ToList();
                     break;
 
                 case "director":
                     movie = movie
-                        .Where(x => x.Director == myQuery)
+                        .Where(x => x.Director.Contains(myQuery))
                         .ToList();
                     break;
 
                 case "actor":
                     movie = movie
-                        .Where(x => x.Actors == myQuery)
+                        .Where(x => x.Actors.Contains(myQuery))
                         .ToList();
                     break;
 
                 case "genre":
                     movie = movie
-                        .Where(x => x.Genre == myQuery)
+                        .Where(x => x.Genre.Contains(myQuery))
                         .ToList();
                     break;
 
             }
+
             return View(movie.ToPagedList(pageNumber, pageSize));
         }
-
-
-        //public ActionResult NewMovieList(int? page, string quest = "All", string myQuery = "")
-        //{
-
-        //    ViewBag.MyQuery = myQuery;
-        //    int pageSize = 1;
-        //    int pageNumber = (page ?? 1);
-
-
-        //    List<Movie> movie = db.Movies
-        //            //.Where(x => x.Name == myQuery)
-        //            .ToList();
-
-        //    switch (quest)
-        //    {
-        //        case "name":
-        //            movie = movie
-        //                .Where(x => x.Name.Contains(myQuery))
-        //                .ToList();
-        //            break;
-
-        //        case "director":
-        //            movie = movie
-        //                .Where(x => x.Director.Contains(myQuery))
-        //                .ToList();
-        //            break;
-
-        //        case "actor":
-        //            movie = movie
-        //                .Where(x => x.Actors.Contains(myQuery))
-        //                .ToList();
-        //            break;
-
-        //        case "genre":
-        //            movie = movie
-        //                .Where(x => x.Genre.Contains(myQuery))
-        //                .ToList();
-        //            break;
-
-        //    }
-
-        //    return View("MovieList", movie.ToPagedList(pageNumber, pageSize));
-        //}
 
 
         [HttpGet]
