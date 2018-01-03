@@ -25,9 +25,9 @@ namespace RosMovies.Models
         [Required(ErrorMessage = "Введите жанр")]
         public string Genre { get; set; }
 
-        public List<Review> Reviews { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
-        public List<User> Users { get; }
+        public virtual ICollection<User> Users { get; }
 
         public Movie()
         {

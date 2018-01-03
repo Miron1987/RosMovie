@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201712301612131_Fourth1.Designer.cs">
       <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801031706537_Fifth.cs" />
+    <Compile Include="Migrations\201801031706537_Fifth.Designer.cs">
+      <DependentUpon>201801031706537_Fifth.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\UserLogin.cs" />
     <Compile Include="Models\Review.cs" />
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712301612131_Fourth1.resx">
       <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801031706537_Fifth.resx">
+      <DependentUpon>201801031706537_Fifth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

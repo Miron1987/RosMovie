@@ -1,5 +1,5 @@
 ﻿@model RosMovies.Models.User
-
+@using RosMovies.Models
 @{
     ViewBag.Title = "Details";
 }
@@ -35,6 +35,12 @@
         </dd>
     </dl>
 </div>
+
+@foreach(Movie movie in Model.Movies)
+{
+    @movie.Name;
+}
+
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Избранные фильмы", "FavoriteMovies", "User")
