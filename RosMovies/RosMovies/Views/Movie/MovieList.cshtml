@@ -9,20 +9,7 @@
 
 <h2>MovieList</h2>
 
-@*<div class="container">
-    <div class="col-md-3">
-        <select id="QueryValues" name="QueryValues">
-            <option value="name" type ="selected">Название фильма</option>
-            <option value="director">Режиссер</option>
-            <option value="actor">Актеры</option>
-            <option value="genre">Жанр</option>
-        </select>
-    </div>
-    <div class="col-md-3" id="Search"><input class="form-control" style="margin: 10px" id="mySearch" name="Search" type="text" /></div>
-    <div  class="col-md-3"><input type="submit" value=@ViewBag.Page id="myPage" class="myPage" /></div>
 
-
-</div>*@
 
 <div class="row">
     @using (Html.BeginForm("MovieList", "Movie", FormMethod.Post))
@@ -83,4 +70,3 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/Scripts/MyListScript.js")

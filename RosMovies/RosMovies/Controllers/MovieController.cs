@@ -152,5 +152,16 @@ namespace RosMovies.Controllers
 
             return RedirectToAction("MovieList","Movie");
         }
+
+        public JsonResult SearchMovieList(string query)
+        {
+
+            List<Movie> movies = db.Movies
+                .Where(x => x.Name.Contains(query))
+                .OrderBy(x => x.Name)
+                .ToList();
+
+            return new JsonResult { Data = movies };
+        }
     }
 }
