@@ -36,12 +36,15 @@
     </dl>
 </div>
 
-@foreach(Movie movie in Model.Movies)
+@foreach (Movie movie in Model.Movies)
 {
-    @movie.Name;
+    <div class="container">
+        <div class="col-md-6">@Html.ActionLink(@movie.Name, "Details", "Movie", new { id = movie.Id }, new { id = movie.Id }) </div>
+        <div class="col-md-6">@Html.ActionLink("Убрать из избранного", "RemoveFavorite", "User", new { id = movie.Id }, new { id = movie.Id }) </div>
+    </div>
 }
 
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Избранные фильмы", "FavoriteMovies", "User")
+    @*@Html.ActionLink("Избранные фильмы", "FavoriteMovies", "User")*@
 </p>

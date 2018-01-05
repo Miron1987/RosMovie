@@ -127,10 +127,6 @@ namespace RosMovies.Controllers
             return View(user);
         }
 
-       
-        //public ActionResult ShowFavoriteMovie
-
-
         public ActionResult FavoriteMovies()
         {
             if (!User.Identity.IsAuthenticated)
@@ -138,24 +134,37 @@ namespace RosMovies.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            //var existingUser = db.Users.FirstOrDefault(u => u.Mail == User.Identity.Name);
             User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
-
-            //List<Movie> movies = user.Movies;
-
-            //List<User> user = db.Users
-            //    .Where(x => x.Mail == User.Identity.Name)
-            //    .Include(m => m.Movies)
-            //    .Include(x => x.Movies.Select(e => e.Name))
-            //    .ToList();
-
-            //var current = user.Where(x => x.Mail == User.Identity.Name);
 
             return View(user);
         }
 
-        //[HttpPost]
         public ActionResult AddFavorite(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            if (id == null)
+            {
+                return View("Index", "Home");
+            }
+
+            User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
+            Movie movie = db.Movies.FirstOrDefault(x => x.Id == id);
+
+            if (!user.Movies.Contains<Movie>(movie))
+            {
+                user.Movies.Add(movie);
+                db.SaveChanges();
+
+            }
+
+            return RedirectToAction("MovieList", "Movie");
+        }
+
+        public ActionResult RemoveFavorite(int? id)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -174,70 +183,10 @@ namespace RosMovies.Controllers
             {
                 user.Movies.Remove(movie);
                 db.SaveChanges();
-
-                //    return RedirectToAction("MovieList", "Movie");
-            }
-            else
-            {
-                user.Movies.Add(movie);
-                db.SaveChanges();
             }
 
-            return RedirectToAction("MovieList", "Movie");
+                return RedirectToAction("Details");
         }
-
-
-        //[HttpPost]
-        //public ActionResult AddFavorite(Movie movie)
-        //{
-        //    if (!User.Identity.IsAuthenticated)
-        //    {
-        //        return RedirectToAction("MovieList", "Movie");
-        //    }
-
-        //    User user = db.Users.FirstOrDefault(x => x.Mail == User.Identity.Name);
-        //    var curMovie = db.Movies.Where(m => m.Id == movie.Id);
-
-        //    //Movie newMovie = new Movie {Name = movie.Name, Actors = movie.Actors, Description = movie.Description,
-        //    //        Director = movie.Director, Genre = movie.Genre, Id = movie.Id, Reviews = movie.Reviews};
-
-
-
-
-        //    if (!user.Movies.Contains(movie))
-        //    {
-        //        try
-        //        {
-        //            user.Movies.Add(movie);
-        //            //db.Entry(user).State = EntityState.Modified;
-        //            db.SaveChanges();
-        //        }
-        //        catch (DbEntityValidationException ex)
-        //        {
-        //            foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-        //            {
-        //                Response.Write("Object: " + validationError.Entry.Entity.ToString());
-        //                Response.Write("    ");
-        //                foreach (DbValidationError err in validationError.ValidationErrors)
-        //                {
-        //                    Response.Write(err.ErrorMessage + "    ");
-        //                }
-        //            }
-        //        }
-
-
-        //    }
-        //    else
-        //    {
-        //        user.Movies.Remove(movie);
-        //        //db.Entry(user).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //    }
-
-
-        //    return RedirectToAction("MovieList", "Movie");
-        //}
-
 
         protected override void Dispose(bool disposing)
         {
