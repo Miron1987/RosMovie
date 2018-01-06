@@ -125,6 +125,7 @@ namespace RosMovies.Controllers
 
             List<Review> reviews = db.Reviews
                 .Where(y => y.MovieId == id)
+                .Where(x => x.MovieReview.Length > 0)
                 .ToList();
 
             return View(reviews);
@@ -134,6 +135,11 @@ namespace RosMovies.Controllers
         public ActionResult Details(Review review)
         {
             if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            if (review.MovieReview.Length == 0 || review.MovieReview == "Введите не более 250 символов")
             {
                 return RedirectToAction("MovieList", "Movie");
             }

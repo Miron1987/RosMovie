@@ -4,10 +4,10 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "MovieList";
+    ViewBag.Title = "Список фильмов";
 }
 
-<h2>MovieList</h2>
+<h2>Список фильмов</h2>
 
 
 
@@ -15,8 +15,8 @@
     @using (Html.BeginForm("MovieList", "Movie", FormMethod.Post))
     {
         <div class="row">
-            <div class="col-sm-2" id="wrapper-dropdown" style="padding-top:15px;">
-                <label for="quest">Критерий:</label>
+            <div class="col-sm-4" id="wrapper-dropdown" style="padding-top:15px;">
+                <label for="quest">Критерий:  </label>
                 <select id="quest" name="quest">
                     <option value="name" selected>Название фильма</option>
                     <option value="director">Режиссер</option>
@@ -24,11 +24,11 @@
                     <option value="genre">Жанр</option>
                 </select>
             </div>
-            <div class="col-md-6" style="padding-top:15px;">
+            <div class="col-md-3" style="padding-top:15px;">
                 <input class="form-control"  id="myQuery" name="myQuery" type="text" />
             </div>
-            <div class="col-md-4" style="padding-left: 100px; padding-top: 0px; padding-bottom: 10px;">
-                <button class="btn-filter" name="show" id="botShow">Отправить</button>
+            <div class="col-md-2" style="padding-left: 100px; padding-top: 15px; padding-bottom: 10px;">
+                <button class="btn btn-default" name="show" id="botShow">Отправить</button>
             </div>
         </div>
     }
@@ -42,29 +42,34 @@
     {
         <hr/>
         <div class="container">
-            <div class="col-md-2">@movie.Name</div>
-            <div class="col-md-2">@movie.Description</div>
-            <div class="col-md-1">@movie.Director</div>
-            <div class="col-md-2">@movie.Actors</div>
-            <div class="col-md-1">@movie.Genre</div>
+            <div class="col-md-3"><h4>@movie.Name</h4></div>
+            <div class="col-md-3"><h5>Режиссер: </h5>@movie.Director</div>
+            <div class="col-md-4">Актеры: @movie.Actors</div>
+            <div class="col-md-2">Жанр: @movie.Genre</div>
+        </div>
+        <div class="container">
             <div class="col-md-2">
                 @Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)
             </div>
             <div class="col-md-2">
                 @if (Request.IsAuthenticated)
-                    {
-                       @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
-                       {
-                        <input type="submit" value="В избранное" />
-                       }*@
+                {
+                    @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
+                        {
+                         <input type="submit" value="В избранное" />
+                        }*@
 
 
-                        @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id}, new { id = movie.Id}) 
-                    }
+                    @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id }, new { id = movie.Id })
+                }
             </div>
         </div>
-    }
-</div>
+        <hr/>
+        <div class="container">
+            <div class="col-md-12">@movie.Description</div>
+        </div>
+            }
+        </div>
 
 @Html.PagedListPager(Model, page => Url.Action("MovieList", "Movie", new { page, myQuery = ViewBag.MyQuery, quest = ViewBag.Quest}))
 

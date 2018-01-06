@@ -6,24 +6,29 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Movie.Name</h2>
 
 @*@Model.Name*@
-<div>@ViewBag.Movie.Name</div>
+<div><h4>Режиссер: @ViewBag.Movie.Director</h4></div>
+<div><h4>Актеры: @ViewBag.Movie.Actors</h4></div>
+<div><h4>Жанр: @ViewBag.Movie.Genre</h4></div>
+<div>Описание: @ViewBag.Movie.Description</div>
 
-
+<div><h4>Комментарии: </h4></div>
 @foreach(var review in Model)
 {
-    <div class="container">
+    <hr/>
+    <div>
         <p>
-        <div class="text">
+        <div class="container">
             @review.MovieReview
         </div>
         <div class="info">
             <div class="container">
-                <div class="col-md-1">@review.UserName</div>
-                <div class="col-md-1">@review.UserLastName</div>
-                <div class="col-md-1">@review.DateCom</div>
+                <div class="col-md-2">@review.UserName</div>
+                <div class="col-md-2">@review.UserLastName</div>
+                <div class="col-md-2">@review.DateCom</div>
+                <div class="col-md-2">Оценка: @review.Score</div>
             </div>
         </div>
         </p>
@@ -33,20 +38,21 @@
 
 @if (Request.IsAuthenticated)
 {
-
+    <hr/>
     using (Html.BeginForm("Details", "Movie", FormMethod.Post, new { review = new Review { } }))
         {
                 <input type="hidden" value="@ViewBag.Movie.Id" name="MovieId" />
                 <input type="hidden" value="@ViewBag.User.FirstName" name="UserName" />
                 <input type="hidden" value="@ViewBag.User.LastName" name="UserLastName" />
                 <input type="hidden" value="@DateTime.Now" name="DateCom" />
-                <p>Комментарий: </p>
+                <p>Введите ваш комментарий: </p>
                 @*@Html.TextBox("MovieReview", "Ваш комментарий", new { @class = "myId", id = "myId" })*@
-                @Html.TextArea("MovieReview", "Введите не более 250 символов", 15, 250, new { @class = "myId", id = "myId" })
+                @Html.TextArea("MovieReview", "Введите не более 250 символов", 5, 550, new { @class = "form-control", id = "myId" })
                 <p>Оценте фильм:</p>
                 @Html.ListBox("Score", new MultiSelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }))
 
-                <p><input type="submit" value="Отправить" id="myButtomId"  class="myButtomId" /></p>
+
+                <p><input type="submit" value="Отправить" id="myButtomId"  class="btn btn-default" /></p>
         }
 }
 

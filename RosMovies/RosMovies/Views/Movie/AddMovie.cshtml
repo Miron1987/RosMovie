@@ -1,4 +1,5 @@
 ﻿@model RosMovies.Models.Movie
+@using RosMovies.Models
 
 @{
     ViewBag.Title = "AddMovie";
@@ -7,7 +8,7 @@
 
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new { movie = new Movie { } }))
 {
     @Html.AntiForgeryToken()
 
