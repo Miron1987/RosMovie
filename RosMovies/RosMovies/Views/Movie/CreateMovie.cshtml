@@ -1,16 +1,9 @@
 ﻿@model RosMovies.Models.Movie
 
-@{
-    ViewBag.Title = "AddMovie";
-}
-
-
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Movie</h4>
         <hr />
@@ -57,12 +50,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("К списку", "MovieList")
+    @Html.ActionLink("Back to List", "Index")
 </div>

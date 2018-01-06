@@ -33,7 +33,7 @@
                                     @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
                                      {
                                          @Html.AntiForgeryToken()
-                                        <input type="submit" value="Отправить"/>
+                                        <input type="submit" value="Отправить" class="btn btn-default"/>
                                     }    
                             </li>
                             <li>@Html.ActionLink("Details", "Details", "User")</li>
