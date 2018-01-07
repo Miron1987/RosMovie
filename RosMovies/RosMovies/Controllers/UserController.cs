@@ -36,11 +36,7 @@ namespace RosMovies.Controllers
                     ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
                     return View(user);
                 }
-                //else if (user.Login == true && existingUser != null)
-                //{
-                //    FormsAuthentication.SetAuthCookie(user.Login, true);
-                //    return RedirectToAction("Index", "Admin");
-                //}
+
                 else
                 {
                     var id = existingUser.Id;

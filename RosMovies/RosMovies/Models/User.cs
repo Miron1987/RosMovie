@@ -38,10 +38,7 @@ namespace RosMovies.Models
         {
             Movies = new List<Movie>();
         }
-
-        //public  List<Review> Reviews { get; set; }
-
-        
+       
 
     }
 }

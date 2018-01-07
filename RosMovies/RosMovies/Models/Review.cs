@@ -14,8 +14,6 @@ namespace RosMovies.Models
 
         public int MovieId { get; set; }
 
-        //public int UserId { get; set; }
-
         public string UserName { get; set; }
 
         public string UserLastName { get; set; }

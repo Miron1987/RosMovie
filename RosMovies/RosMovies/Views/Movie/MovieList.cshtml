@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<RosMovies.Models.Movie>*@
-
+﻿
 @model PagedList.IPagedList<RosMovies.Models.Movie>
 @using PagedList.Mvc;
 
@@ -35,8 +34,6 @@
 </div>
 
 
-
-@*@{Html.RenderPartial("_PartialList", Model);}*@
 <div>
     @foreach (var movie in Model)
     {
@@ -54,13 +51,7 @@
             <div class="col-md-2">
                 @if (Request.IsAuthenticated)
                 {
-                    @*using (Html.BeginForm("AddFavorite", "User", FormMethod.Post, new { movie = @movie }))
-                        {
-                         <input type="submit" value="В избранное" />
-                        }*@
-
-
-                    @Html.ActionLink("Избранное", "AddFavorite", "User", new { id = movie.Id }, new { id = movie.Id })
+                    @Html.ActionLink("В избранное", "AddFavorite", "User", new { id = movie.Id }, new { id = movie.Id })
                 }
             </div>
         </div>
