@@ -71,7 +71,7 @@ namespace RosMovies.Controllers
 
         public ActionResult MovieList(int? page, string quest = "name", string myQuery = "")
         {
-            int pageSize = 1;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
             ViewBag.Quest = quest;
             ViewBag.MyQuery = myQuery;
@@ -147,7 +147,6 @@ namespace RosMovies.Controllers
             db.Reviews.Add(new Review
             {
                 MovieId = review.MovieId,
-                //UserId = review.UserId,
                 UserName = review.UserName,
                 UserLastName = review.UserLastName,
                 DateCom = review.DateCom,
