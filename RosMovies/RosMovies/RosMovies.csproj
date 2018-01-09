@@ -258,6 +258,8 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\FavoriteMovies.cshtml" />
+    <Content Include="Views\Movie\Edit.cshtml" />
+    <Content Include="Views\Movie\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

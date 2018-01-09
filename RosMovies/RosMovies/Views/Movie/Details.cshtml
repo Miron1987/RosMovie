@@ -6,13 +6,23 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@ViewBag.Movie.Name</h2>
+<h2>"@ViewBag.Movie.Name"</h2>
 
 @*@Model.Name*@
 <div><h4>Режиссер: @ViewBag.Movie.Director</h4></div>
 <div><h4>Актеры: @ViewBag.Movie.Actors</h4></div>
 <div><h4>Жанр: @ViewBag.Movie.Genre</h4></div>
 <div>Описание: @ViewBag.Movie.Description</div>
+
+@if (Request.IsAuthenticated)
+{
+    <div>
+        <hr/>
+            @Html.ActionLink("Редактировать", "Edit", new { id = @ViewBag.Movie.Id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = @ViewBag.Movie.Id })
+        <hr />
+    </div>
+}
 
 <div><h4>Комментарии: </h4></div>
 @foreach(var review in Model)

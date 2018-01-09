@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -170,6 +171,91 @@ namespace RosMovies.Controllers
                 .ToList();
 
             return new JsonResult { Data = movies };
+        }
+
+
+        // GET: Movies/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Edit", movie);
+        }
+
+        // POST: Movies/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Director,Actors,Description,Genre")] Movie movie)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(movie).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("Details", movie);
+        }
+
+        // GET: Movies/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Delete", movie);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MovieList", "Movie");
+            }
+
+            Movie movie = db.Movies.Find(id);
+            db.Movies.Remove(movie);
+            db.SaveChanges();
+            return RedirectToAction("MovieList", "Movie"); ;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }
