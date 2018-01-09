@@ -32,15 +32,12 @@
     <hr/>
     <div>
         <p>
-        <div class="container">
-            @review.MovieReview
-        </div>
         <div class="info">
             <div class="container">
-                <div class="col-md-2">@review.UserName</div>
-                <div class="col-md-2">@review.UserLastName</div>
-                <div class="col-md-2">@review.DateCom</div>
-                <div class="col-md-2">Оценка: @review.Score</div>
+                <dl>
+                    <dt>@review.UserName @review.UserLastName @review.DateCom Оценка: @review.Score</dt>
+                    <dd>@review.MovieReview</dd>
+                </dl>
             </div>
         </div>
         </p>
