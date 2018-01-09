@@ -53,7 +53,4 @@ C:\Users\user\RosMovies\RosMovies\RosMovies\bin\PagedList.Mvc.dll
 C:\Users\user\RosMovies\RosMovies\RosMovies\bin\PagedList.xml
 C:\Users\user\RosMovies\RosMovies\RosMovies\bin\PagedList.Mvc.xml
 C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.Second.resources
-C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.Third.resources
-C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.Fourth.resources
 C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.Fourth1.resources
-C:\Users\user\RosMovies\RosMovies\RosMovies\obj\Debug\RosMovies.Migrations.Fifth.resources

@@ -11,7 +11,7 @@
 
 
 
-<div class="row">
+@*<div class="row">
     <div class="col-sm-3" style="padding-top:15px;">
         Поиск по названию:
     </div>
@@ -24,26 +24,25 @@
     <div class="col-md-2" style="padding-top:15px;">
         Поиск по жанру
     </div>
-</div>
+</div>*@
 
-<div class="row">
-    @using (Html.BeginForm("MovieList", "Movie", FormMethod.Post))
+<div class="container-fluid" style="margin-left:30px">
+    @using (Html.BeginForm("MovieList", "Movie", FormMethod.Post, new { @class="form-inline"}))
     {
         <div class="row">
-            <div class="col-sm-3" style="padding-top:15px;">
-            
+            <div class="form-group" style="padding-top:15px; width: 20%">
                 <input class="form-control" id="movieName" name="movieName" type="text" value="Поиск по названию"/>
             </div>
-            <div class="col-md-2" style="padding-top:15px;">
+            <div class="form-group" style="padding-top:15px">
                 <input class="form-control"  id="movieDirector" name="movieDirector" type="text" value="Поиск по режиссеру"/>
             </div>
-            <div class="col-md-2" style="padding-top:15px;">
+            <div class="form-group"style="padding-top:15px">
                 <input class="form-control" id="movieActor" name="movieActor" type="text" value="Поиск по актерам"/>
             </div>
-            <div class="col-md-2" style="padding-top:15px;">
+            <div class="form-group" style="padding-top:15px">
                 <input class="form-control" id="movieGenre" name="movieGenre" type="text" value="Поиск по жанру"/>
             </div>
-            <div class="col-md-2" style="padding-left: 100px; padding-top: 15px; padding-bottom: 10px;">
+            <div class="form-group" style="padding-top: 15px">
                 <button class="btn btn-default" name="show" id="botShow">Отправить</button>
             </div>
         </div>
@@ -56,24 +55,26 @@
     {
         <hr/>
         <div class="container">
-            <div class="col-md-3"><h4>@movie.Name</h4></div>
-            <div class="col-md-3"><h5>Режиссер: </h5>@movie.Director</div>
-            <div class="col-md-4">Актеры: @movie.Actors</div>
-            <div class="col-md-2">Жанр: @movie.Genre</div>
-        </div>
-        <div class="container">
-            <div class="col-md-2">
-                @Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)
-            </div>
-            <div class="col-md-2">
+            <dl>
+                <dt>Название:</dt>
+                <dd>@movie.Name</dd>
+                <dt>Режиссер:</dt>
+                <dd>@movie.Director</dd>
+                <dt>Актеры:</dt>
+                <dd>@movie.Actors</dd>
+                <dt>Жанр:</dt>
+                <dd>@movie.Genre</dd>
+                <dd>@Html.ActionLink("Подробнее", "Details", "Movie", new { id = @movie.Id }, null)</dd>
+                <dd>
                 @if (Request.IsAuthenticated)
                 {
                     @Html.ActionLink("В избранное", "AddFavorite", "User", new { id = movie.Id }, new { id = movie.Id })
                 }
-            </div>
-        </div>
-        <hr/>
-        <div class="container">
+                </dd>
+            </dl>
+</div>
+
+        <div class="container" style="margin-left:10px">
             <div class="col-md-12">@movie.Description</div>
         </div>
             }
