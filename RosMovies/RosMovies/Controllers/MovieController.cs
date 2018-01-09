@@ -69,43 +69,46 @@ namespace RosMovies.Controllers
             return View();
         }
 
-        public ActionResult MovieList(int? page, string quest = "name", string myQuery = "")
+        public ActionResult MovieList(int? page, string movieName = "Поиск по названию", string movieDirector = "Поиск по режиссеру",
+            string movieActor = "Поиск по актерам", string movieGenre = "Поиск по жанру")
         {
-            int pageSize = 3;
+            int pageSize = 1;
             int pageNumber = (page ?? 1);
-            ViewBag.Quest = quest;
-            ViewBag.MyQuery = myQuery;
+            ViewBag.MovieName = movieName;
+            ViewBag.MovieDirector = movieDirector;
+            ViewBag.MovieActor = movieActor;
+            ViewBag.MovieGenre = movieGenre;
 
             List<Movie> movie = db.Movies
                     .OrderBy(x => x.Name)
                     .ToList();
-
-            switch (quest)
+       
+            if (movieName != "Поиск по названию")
             {
-                case "name":
-                    movie = movie
-                        .Where(x => x.Name.Contains(myQuery))
-                        .ToList();
-                    break;
+                movie = movie
+                    .Where(x => x.Name.Contains(movieName))
+                    .ToList();
+            }
 
-                case "director":
-                    movie = movie
-                        .Where(x => x.Director.Contains(myQuery))
-                        .ToList();
-                    break;
+            if (movieDirector != "Поиск по режиссеру")
+            {
+                movie = movie
+                    .Where(x => x.Director.Contains(movieDirector))
+                    .ToList();
+            }
 
-                case "actor":
-                    movie = movie
-                        .Where(x => x.Actors.Contains(myQuery))
-                        .ToList();
-                    break;
+            if (movieActor != "Поиск по актерам")
+            {
+                movie = movie
+                    .Where(x => x.Actors.Contains(movieActor))
+                    .ToList();
+            }
 
-                case "genre":
-                    movie = movie
-                        .Where(x => x.Genre.Contains(myQuery))
-                        .ToList();
-                    break;
-
+            if (movieGenre != "Поиск по жанру")
+            {
+                movie = movie
+                    .Where(x => x.Genre.Contains(movieGenre))
+                    .ToList();
             }
 
             return View(movie.ToPagedList(pageNumber, pageSize));
@@ -155,7 +158,7 @@ namespace RosMovies.Controllers
             });
             db.SaveChanges();
 
-            return RedirectToAction("MovieList","Movie");
+            return RedirectToAction("Details", "Movie", review.MovieId);
         }
 
         public JsonResult SearchMovieList(string query)
