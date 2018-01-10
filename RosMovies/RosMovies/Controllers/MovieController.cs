@@ -15,10 +15,10 @@ namespace RosMovies.Controllers
         RosMoviesModel db = new RosMoviesModel();
 
         // GET: Movie
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         public ActionResult AddMovie (int? id)
@@ -57,13 +57,14 @@ namespace RosMovies.Controllers
                         Genre = movie.Genre,
                         Description = movie.Description
                     });
-                db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
+                    db.SaveChanges();
+
+                    return RedirectToAction("MovieList");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Этот фильм уже есть в базе");
-                    return View("AddMovie", "Movie");
+                    return View("AddMovie");
                 }
             }
 
@@ -73,7 +74,7 @@ namespace RosMovies.Controllers
         public ActionResult MovieList(int? page, string movieName = "Поиск по названию", string movieDirector = "Поиск по режиссеру",
             string movieActor = "Поиск по актерам", string movieGenre = "Поиск по жанру")
         {
-            int pageSize = 1;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
             ViewBag.MovieName = movieName;
             ViewBag.MovieDirector = movieDirector;
@@ -210,9 +211,9 @@ namespace RosMovies.Controllers
             {
                 db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MovieList");
             }
-            return View("Details", movie);
+            return View("Details", movie.Id);
         }
 
         // GET: Movies/Delete/5
