@@ -1,5 +1,6 @@
 ﻿using PagedList;
 using RosMovies.Models;
+using RosMovies.ProgectViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace RosMovies.Controllers
 {
+    //[Authorize]
     public class MovieController : Controller
     {
         RosMoviesModel db = new RosMoviesModel();
@@ -71,50 +73,99 @@ namespace RosMovies.Controllers
             return View();
         }
 
-        public ActionResult MovieList(int? page, string movieName = "Поиск по названию", string movieDirector = "Поиск по режиссеру",
+        public ActionResult MovieList(int page = 1, string movieName = "Поиск по названию", string movieDirector = "Поиск по режиссеру",
             string movieActor = "Поиск по актерам", string movieGenre = "Поиск по жанру")
         {
+
             int pageSize = 3;
+
+            MovieListViewModel model = new MovieListViewModel
+            {
+                movies = db.Movies
+                        .Where(m => m.Name == movieName)
+                        .Where(m => m.Director == movieDirector)
+                        .Where(m => m.Actors.Contains(movieActor))
+                        .Where(m => m.Genre == movieGenre)
+                        .OrderBy(m => m.Name)
+                        .Skip((page - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList(),
+
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = category == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                        repository.Products.Count() :
+                        repository.Products.Where(e => e.Category == category).Count()
+                },
+
+            }
+
+ 
             int pageNumber = (page ?? 1);
-            ViewBag.MovieName = movieName;
-            ViewBag.MovieDirector = movieDirector;
-            ViewBag.MovieActor = movieActor;
-            ViewBag.MovieGenre = movieGenre;
+            //ViewBag.MovieName = movieName;
+            //ViewBag.MovieDirector = movieDirector;
+            //ViewBag.MovieActor = movieActor;
+            //ViewBag.MovieGenre = movieGenre;
 
-            List<Movie> movie = db.Movies
-                    .OrderBy(x => x.Name)
-                    .ToList();
+            //List<Movie> movie = db.Movies
+            //        .OrderBy(x => x.Name)
+            //        .ToList();
        
-            if (movieName != "Поиск по названию")
-            {
-                movie = movie
-                    .Where(x => x.Name.Contains(movieName))
-                    .ToList();
-            }
+            //if (movieName != "Поиск по названию")
+            //{
+            //    movie = movie
+            //        .Where(x => x.Name.Contains(movieName))
+            //        .ToList();
+            //}
 
-            if (movieDirector != "Поиск по режиссеру")
-            {
-                movie = movie
-                    .Where(x => x.Director.Contains(movieDirector))
-                    .ToList();
-            }
+            //if (movieDirector != "Поиск по режиссеру")
+            //{
+            //    movie = movie
+            //        .Where(x => x.Director.Contains(movieDirector))
+            //        .ToList();
+            //}
 
-            if (movieActor != "Поиск по актерам")
-            {
-                movie = movie
-                    .Where(x => x.Actors.Contains(movieActor))
-                    .ToList();
-            }
+            //if (movieActor != "Поиск по актерам")
+            //{
+            //    movie = movie
+            //        .Where(x => x.Actors.Contains(movieActor))
+            //        .ToList();
+            //}
 
-            if (movieGenre != "Поиск по жанру")
-            {
-                movie = movie
-                    .Where(x => x.Genre.Contains(movieGenre))
-                    .ToList();
-            }
+            //if (movieGenre != "Поиск по жанру")
+            //{
+            //    movie = movie
+            //        .Where(x => x.Genre.Contains(movieGenre))
+            //        .ToList();
+            //}
 
             return View(movie.ToPagedList(pageNumber, pageSize));
         }
+
+
+        //public ViewResult List(string category, int page = 1)
+        //{
+        //    ProductsListViewModel model = new ProductsListViewModel
+        //    {
+        //        Products = repository.Products
+        //                    .Where(p => category == null || p.Category == category)
+        //                    .OrderBy(p => p.ProductID)
+        //                    .Skip((page - 1) * PageSize)
+        //                    .Take(PageSize),
+        //        PagingInfo = new PagingInfo
+        //        {
+        //            CurrentPage = page,
+        //            ItemsPerPage = PageSize,
+        //            TotalItems = category == null ?
+        //                repository.Products.Count() :
+        //                repository.Products.Where(e => e.Category == category).Count()
+        //        },
+        //        CurrentCategory = category
+        //    };
+        //    return View(model);
+        //}
 
 
         [HttpGet]

@@ -10,6 +10,7 @@ namespace RosMovies.Models
     {
         public int Id { get; set; }
 
+        [ScaffoldColumn(false)]
         [Required(ErrorMessage = "Введите Название")]
         [Display(Name = "Название")]
         public string Name { get; set; }
