@@ -8,7 +8,7 @@ namespace RosMovies.ProgectViewModels
 {
     public class MovieListViewModel
     {
-        public IEnumerable<Movie> movies { get; set; } // список фильмов
+        public IEnumerable<Movie> Movies { get; set; } // список фильмов
         public PagingInfo PagingInfo { get; set; }  // для пагинации
         public string CurrentMovieName { get; set; }
         public string CurrentMovieDirector { get; set; }

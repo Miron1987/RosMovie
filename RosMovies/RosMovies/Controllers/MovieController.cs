@@ -81,10 +81,10 @@ namespace RosMovies.Controllers
 
             MovieListViewModel model = new MovieListViewModel
             {
-                movies = db.Movies
-                        .Where(m => m.Name == movieName)
-                        .Where(m => m.Director == movieDirector)
-                        .Where(m => m.Actors.Contains(movieActor))
+                Movies = db.Movies
+                        //.Where(m => m.Name == movieName)
+                        //.Where(m => m.Director == movieDirector)
+                        //.Where(m => m.Actors.Contains(movieActor))
                         .Where(m => m.Genre == movieGenre)
                         .OrderBy(m => m.Name)
                         .Skip((page - 1) * pageSize)
@@ -95,15 +95,22 @@ namespace RosMovies.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = category == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-                        repository.Products.Count() :
-                        repository.Products.Where(e => e.Category == category).Count()
+                    TotalItems = movieName == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                        db.Movies.Count() :
+                        db.Movies.Where(m => m.Name == movieName).Count()
                 },
 
-            }
+                CurrentMovieActor = movieActor,
+                CurrentMovieDirector = movieDirector,
+                CurrentMovieGenre = movieGenre,
+                CurrentMovieName = movieName               
 
- 
-            int pageNumber = (page ?? 1);
+            };
+
+            //return View(model.ToPagedList(model.PagingInfo.CurrentPage, pageSize));
+            return View(model);
+
+            //int pageNumber = (page ?? 1);
             //ViewBag.MovieName = movieName;
             //ViewBag.MovieDirector = movieDirector;
             //ViewBag.MovieActor = movieActor;
@@ -112,7 +119,7 @@ namespace RosMovies.Controllers
             //List<Movie> movie = db.Movies
             //        .OrderBy(x => x.Name)
             //        .ToList();
-       
+
             //if (movieName != "Поиск по названию")
             //{
             //    movie = movie
@@ -141,7 +148,7 @@ namespace RosMovies.Controllers
             //        .ToList();
             //}
 
-            return View(movie.ToPagedList(pageNumber, pageSize));
+            // return View(movie.ToPagedList(pageNumber, pageSize));
         }
 
 
