@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace RosMovies.Controllers
 {
-    //[Authorize]
+
     public class MovieController : Controller
     {
         RosMoviesModel db = new RosMoviesModel();
@@ -73,11 +73,11 @@ namespace RosMovies.Controllers
             return View();
         }
 
-        public ActionResult MovieList(int page = 1, string movieName = "Поиск по названию", string movieDirector = "Поиск по режиссеру",
-            string movieActor = "Поиск по актерам", string movieGenre = "Поиск по жанру")
+        public ActionResult MovieList(string movieName, string movieDirector,
+            string movieActor, string movieGenre, int page = 1)
         {
 
-            int pageSize = 3;
+            int pageSize = 1;
 
             MovieListViewModel model = new MovieListViewModel
             {
@@ -95,9 +95,9 @@ namespace RosMovies.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = movieName == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                    TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
                         db.Movies.Count() :
-                        db.Movies.Where(m => m.Name == movieName).Count()
+                        db.Movies.Where(m => m.Genre == movieGenre).Count()
                 },
 
                 CurrentMovieActor = movieActor,
