@@ -73,84 +73,150 @@ namespace RosMovies.Controllers
             return View();
         }
 
-        public ActionResult MovieList(string movieName, string movieDirector,
-            string movieActor, string movieGenre, int page = 1)
+        //[HttpGet]
+        //public ActionResult MovieList (string movieName, int page = 1)
+        //{
+        //    int pageSize = 1;
+        //    MovieListViewModel model = new MovieListViewModel
+        //    {
+
+
+        //        Movies = db.Movies
+        //                .OrderBy(m => m.Name)
+        //                .Skip((page - 1) * pageSize)
+        //                .Take(pageSize)
+        //                .ToList(),
+
+        //        PagingInfo = new PagingInfo
+        //        {
+        //            CurrentPage = page,
+        //            ItemsPerPage = pageSize,
+        //            TotalItems = movieName == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+        //                db.Movies.Count() :
+        //                db.Movies.Where(m => m.Genre == movieName).Count()
+        //        },
+
+        //        CurrentMovieName = movieName
+
+        //    };
+
+
+        //    return View(model); ;
+        //}
+
+
+
+        //[HttpPost]
+        public ActionResult MovieList(string movieName , string movieDirector,
+            string movieActor , string movieGenre , int page = 1)
         {
 
             int pageSize = 1;
-
-            MovieListViewModel model = new MovieListViewModel
+            if (String.IsNullOrEmpty(movieName) &&
+                   String.IsNullOrEmpty(movieDirector) &&
+                   String.IsNullOrEmpty(movieActor) &&
+                   String.IsNullOrEmpty(movieGenre))
             {
-                Movies = db.Movies
-                        //.Where(m => m.Name == movieName)
-                        //.Where(m => m.Director == movieDirector)
-                        //.Where(m => m.Actors.Contains(movieActor))
-                        .Where(m => m.Genre == movieGenre)
+
+                MovieListViewModel model = new MovieListViewModel
+                {
+                    Movies = db.Movies
                         .OrderBy(m => m.Name)
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize)
                         .ToList(),
 
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = page,
+                        ItemsPerPage = pageSize,
+                        TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
                         db.Movies.Count() :
                         db.Movies.Where(m => m.Genre == movieGenre).Count()
-                },
+                    },
 
-                CurrentMovieActor = movieActor,
-                CurrentMovieDirector = movieDirector,
-                CurrentMovieGenre = movieGenre,
-                CurrentMovieName = movieName               
+                    CurrentMovieActor = movieActor,
+                    CurrentMovieDirector = movieDirector,
+                    CurrentMovieGenre = movieGenre,
+                    CurrentMovieName = movieName
 
-            };
+                };
+                return View(model);
+            }
 
+            else
+            {
+                MovieListViewModel model = new MovieListViewModel
+                {
+                    //Movies = db.Movies
+                    //.Where(m => m.Name == movieName)
+                    //.Where(m => m.Director == movieDirector)
+                    //.Where(m => m.Actors.Contains(movieActor))
+                    //.Where(m => m.Genre == movieGenre)
+                    //.OrderBy(m => m.Name)
+                    //.Skip((page - 1) * pageSize)
+                    //.Take(pageSize)
+                    //.ToList(),
+
+                    Movies = MakeMovieList(movieName, movieDirector,
+                                                movieActor, movieGenre)
+                                                .Skip((page - 1) * pageSize)
+                                                .Take(pageSize)
+                                                .ToList(),
+
+
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = page,
+                        ItemsPerPage = pageSize,
+                        TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                        db.Movies.Count() :
+                        db.Movies.Where(m => m.Genre == movieGenre).Count()
+                    },
+
+                    CurrentMovieActor = movieActor,
+                    CurrentMovieDirector = movieDirector,
+                    CurrentMovieGenre = movieGenre,
+                    CurrentMovieName = movieName
+                };
+
+                return View(model);
+            }
+        
             //return View(model.ToPagedList(model.PagingInfo.CurrentPage, pageSize));
-            return View(model);
 
-            //int pageNumber = (page ?? 1);
-            //ViewBag.MovieName = movieName;
-            //ViewBag.MovieDirector = movieDirector;
-            //ViewBag.MovieActor = movieActor;
-            //ViewBag.MovieGenre = movieGenre;
 
-            //List<Movie> movie = db.Movies
-            //        .OrderBy(x => x.Name)
-            //        .ToList();
-
-            //if (movieName != "Поиск по названию")
-            //{
-            //    movie = movie
-            //        .Where(x => x.Name.Contains(movieName))
-            //        .ToList();
-            //}
-
-            //if (movieDirector != "Поиск по режиссеру")
-            //{
-            //    movie = movie
-            //        .Where(x => x.Director.Contains(movieDirector))
-            //        .ToList();
-            //}
-
-            //if (movieActor != "Поиск по актерам")
-            //{
-            //    movie = movie
-            //        .Where(x => x.Actors.Contains(movieActor))
-            //        .ToList();
-            //}
-
-            //if (movieGenre != "Поиск по жанру")
-            //{
-            //    movie = movie
-            //        .Where(x => x.Genre.Contains(movieGenre))
-            //        .ToList();
-            //}
-
-            // return View(movie.ToPagedList(pageNumber, pageSize));
         }
 
+        private IEnumerable<Movie> MakeMovieList(string movieName, string movieDirector,
+                                                string movieActor, string movieGenre)
+        {
+            IEnumerable<Movie> model = db.Movies
+                                       .OrderBy(m => m.Name)
+                                       .ToList();
+
+            if (!String.IsNullOrEmpty(movieName))
+            {
+                model = model.Where(m => m.Name == movieName).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(movieActor))
+            {
+                model = model.Where(m => m.Actors == movieActor).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(movieDirector))
+            {
+                model = model.Where(m => m.Director == movieDirector).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(movieGenre))
+            {
+                model = model.Where(m => m.Genre == movieGenre).ToList();
+            }
+
+            return model;
+        }
 
         //public ViewResult List(string category, int page = 1)
         //{
