@@ -130,9 +130,11 @@ namespace RosMovies.Controllers
                     {
                         CurrentPage = page,
                         ItemsPerPage = pageSize,
-                        TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-                        db.Movies.Count() :
-                        db.Movies.Where(m => m.Genre == movieGenre).Count()
+                        TotalItems = CountControl(movieName, movieDirector,
+                                                movieActor, movieGenre)
+                        //TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                        //db.Movies.Count() :
+                        //db.Movies.Where(m => m.Genre == movieGenre).Count()
                     },
 
                     CurrentMovieActor = movieActor,
@@ -169,9 +171,12 @@ namespace RosMovies.Controllers
                     {
                         CurrentPage = page,
                         ItemsPerPage = pageSize,
-                        TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-                        db.Movies.Count() :
-                        db.Movies.Where(m => m.Genre == movieGenre).Count()
+                        //TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
+                        //db.Movies.Count() :
+                        //db.Movies.Where(m => m.Genre == movieGenre).Count()
+
+                        TotalItems = CountControl(movieName, movieDirector,
+                                                movieActor, movieGenre)
                     },
 
                     CurrentMovieActor = movieActor,
@@ -202,7 +207,7 @@ namespace RosMovies.Controllers
 
             if (!String.IsNullOrEmpty(movieActor))
             {
-                model = model.Where(m => m.Actors == movieActor).ToList();
+                model = model.Where(m => m.Actors.Contains(movieActor)).ToList();
             }
 
             if (!String.IsNullOrEmpty(movieDirector))
@@ -217,6 +222,58 @@ namespace RosMovies.Controllers
 
             return model;
         }
+
+        private int CountControl (string movieName, string movieDirector,
+                                                string movieActor, string movieGenre)
+            
+
+        {
+            int answer, helper;
+
+            IEnumerable<Movie> model = db.Movies
+                                       .OrderBy(m => m.Name)
+                                       .ToList();
+
+            answer = model.Count();
+
+            helper = model.Count();
+
+            if (!String.IsNullOrEmpty(movieName))
+            {
+                model = model.Where(m => m.Name == movieName).ToList();
+                helper = model.Count();
+
+                answer = answer < helper ? answer : helper;
+            }
+
+            if (!String.IsNullOrEmpty(movieActor))
+            {
+                model = model.Where(m => m.Actors.Contains(movieActor)).ToList();
+                helper = model.Count();
+
+                answer = answer < helper ? answer : helper;
+            }
+
+            if (!String.IsNullOrEmpty(movieDirector))
+            {
+                model = model.Where(m => m.Director == movieDirector).ToList();
+                helper = model.Count();
+
+                answer = answer < helper ? answer : helper;
+            }
+
+            if (!String.IsNullOrEmpty(movieGenre))
+            {
+                model = model.Where(m => m.Genre == movieGenre).ToList();
+                helper = model.Count();
+
+                answer = answer < helper ? answer : helper;
+            }
+
+
+            return answer;
+        }
+
 
         //public ViewResult List(string category, int page = 1)
         //{
