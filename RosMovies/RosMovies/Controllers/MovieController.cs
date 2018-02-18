@@ -43,22 +43,34 @@ namespace RosMovies.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMovie(Movie movie)
+        public ActionResult AddMovie(Movie movie, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+
+                    movie.ImageMimeType = image.ContentType;
+                    movie.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(movie.ImageData, 0, image.ContentLength);
+
+                }
+
+
+
                 var existingMovie = db.Movies.FirstOrDefault(m => m.Name == movie.Name);
 
                 if (existingMovie == null)
                 {
-                    db.Movies.Add(new Movie
-                    {
-                        Name = movie.Name,
-                        Director = movie.Director,
-                        Actors = movie.Actors,
-                        Genre = movie.Genre,
-                        Description = movie.Description
-                    });
+                    //db.Movies.Add(new Movie
+                    //{
+                    //    Name = movie.Name,
+                    //    Director = movie.Director,
+                    //    Actors = movie.Actors,
+                    //    Genre = movie.Genre,
+                    //    Description = movie.Description
+                    //});
+                    db.Movies.Add(movie);
                     db.SaveChanges();
 
                     return RedirectToAction("MovieList");
@@ -72,38 +84,6 @@ namespace RosMovies.Controllers
 
             return View();
         }
-
-        //[HttpGet]
-        //public ActionResult MovieList (string movieName, int page = 1)
-        //{
-        //    int pageSize = 1;
-        //    MovieListViewModel model = new MovieListViewModel
-        //    {
-
-
-        //        Movies = db.Movies
-        //                .OrderBy(m => m.Name)
-        //                .Skip((page - 1) * pageSize)
-        //                .Take(pageSize)
-        //                .ToList(),
-
-        //        PagingInfo = new PagingInfo
-        //        {
-        //            CurrentPage = page,
-        //            ItemsPerPage = pageSize,
-        //            TotalItems = movieName == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-        //                db.Movies.Count() :
-        //                db.Movies.Where(m => m.Genre == movieName).Count()
-        //        },
-
-        //        CurrentMovieName = movieName
-
-        //    };
-
-
-        //    return View(model); ;
-        //}
-
 
 
         //[HttpPost]
@@ -132,9 +112,6 @@ namespace RosMovies.Controllers
                         ItemsPerPage = pageSize,
                         TotalItems = CountControl(movieName, movieDirector,
                                                 movieActor, movieGenre)
-                        //TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-                        //db.Movies.Count() :
-                        //db.Movies.Where(m => m.Genre == movieGenre).Count()
                     },
 
                     CurrentMovieActor = movieActor,
@@ -150,15 +127,7 @@ namespace RosMovies.Controllers
             {
                 MovieListViewModel model = new MovieListViewModel
                 {
-                    //Movies = db.Movies
-                    //.Where(m => m.Name == movieName)
-                    //.Where(m => m.Director == movieDirector)
-                    //.Where(m => m.Actors.Contains(movieActor))
-                    //.Where(m => m.Genre == movieGenre)
-                    //.OrderBy(m => m.Name)
-                    //.Skip((page - 1) * pageSize)
-                    //.Take(pageSize)
-                    //.ToList(),
+
 
                     Movies = MakeMovieList(movieName, movieDirector,
                                                 movieActor, movieGenre)
@@ -171,10 +140,6 @@ namespace RosMovies.Controllers
                     {
                         CurrentPage = page,
                         ItemsPerPage = pageSize,
-                        //TotalItems = movieGenre == null ? // что пихать сюда аргументов куча а свести все к одному надо 
-                        //db.Movies.Count() :
-                        //db.Movies.Where(m => m.Genre == movieGenre).Count()
-
                         TotalItems = CountControl(movieName, movieDirector,
                                                 movieActor, movieGenre)
                     },
@@ -187,11 +152,23 @@ namespace RosMovies.Controllers
 
                 return View(model);
             }
-        
-            //return View(model.ToPagedList(model.PagingInfo.CurrentPage, pageSize));
 
 
         }
+
+        public FileContentResult GetImage(int movieId)
+        {
+            Movie mov = db.Movies.FirstOrDefault(p => p.Id == movieId);
+            if (mov != null)
+            {
+                return File(mov.ImageData, mov.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
         private IEnumerable<Movie> MakeMovieList(string movieName, string movieDirector,
                                                 string movieActor, string movieGenre)
@@ -275,29 +252,6 @@ namespace RosMovies.Controllers
         }
 
 
-        //public ViewResult List(string category, int page = 1)
-        //{
-        //    ProductsListViewModel model = new ProductsListViewModel
-        //    {
-        //        Products = repository.Products
-        //                    .Where(p => category == null || p.Category == category)
-        //                    .OrderBy(p => p.ProductID)
-        //                    .Skip((page - 1) * PageSize)
-        //                    .Take(PageSize),
-        //        PagingInfo = new PagingInfo
-        //        {
-        //            CurrentPage = page,
-        //            ItemsPerPage = PageSize,
-        //            TotalItems = category == null ?
-        //                repository.Products.Count() :
-        //                repository.Products.Where(e => e.Category == category).Count()
-        //        },
-        //        CurrentCategory = category
-        //    };
-        //    return View(model);
-        //}
-
-
         [HttpGet]
         public ActionResult Details(int? id)
         {
@@ -355,33 +309,22 @@ namespace RosMovies.Controllers
             return new JsonResult { Data = movies };
         }
 
-
-        // GET: Movies/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public ActionResult Edit (int? id)
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("MovieList", "Movie");
-            }
+            Movie movie = db.Movies.FirstOrDefault(m => m.Id == id);
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movie = db.Movies.Find(id);
-            if (movie == null)
-            {
-                return HttpNotFound();
-            }
-            return View("Edit", movie);
+            return View(movie);
         }
+
+
 
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Director,Actors,Description,Genre")] Movie movie)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Director,Actors,Description,Genre")] Movie movie,  HttpPostedFileBase image)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -390,6 +333,17 @@ namespace RosMovies.Controllers
 
             if (ModelState.IsValid)
             {
+
+                if (image != null)
+                {
+
+                    movie.ImageMimeType = image.ContentType;
+                    movie.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(movie.ImageData, 0, image.ContentLength);
+
+                }
+
+
                 db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("MovieList");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RosMovies.Models
 {
@@ -29,6 +30,11 @@ namespace RosMovies.Models
         [Required(ErrorMessage = "Введите пароль")]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
+
+        public byte[] ImageData { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
 
         public bool Moderator { get; set; }
 

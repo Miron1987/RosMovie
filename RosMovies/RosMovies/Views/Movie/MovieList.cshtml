@@ -48,6 +48,7 @@
             </div>
         </div>
     }
+
 </div>
 
 
@@ -56,6 +57,16 @@
     {
         <hr/>
         <div class="container">
+            @if (movie.ImageData == null)
+            {
+                @:None
+            }
+            else
+            {
+                <img width="150" height="300" src="@Url.Action("GetImage", "Movie", new {
+                                                            movie.Id
+                                                            })" />
+            }
             <dl>
                 <dt>Название:</dt>
                 <dd>@movie.Name</dd>

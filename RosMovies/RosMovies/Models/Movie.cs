@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RosMovies.Models
 {
     public class Movie
     {
+        [Display(AutoGenerateField = false)]
         public int Id { get; set; }
 
         [ScaffoldColumn(false)]
@@ -30,6 +32,11 @@ namespace RosMovies.Models
         [Required(ErrorMessage = "Введите жанр")]
         [Display(Name = "Жанр")]
         public string Genre { get; set; }
+
+        public byte[] ImageData { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
 
