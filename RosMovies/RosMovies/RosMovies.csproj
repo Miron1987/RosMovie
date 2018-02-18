@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201712301612131_Fourth1.Designer.cs">
       <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802161520249_Images.cs" />
+    <Compile Include="Migrations\201802161520249_Images.Designer.cs">
+      <DependentUpon>201802161520249_Images.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\UserLogin.cs" />
     <Compile Include="Models\PagingInfo.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712301612131_Fourth1.resx">
       <DependentUpon>201712301612131_Fourth1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802161520249_Images.resx">
+      <DependentUpon>201802161520249_Images.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
