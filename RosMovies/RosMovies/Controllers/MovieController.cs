@@ -156,8 +156,13 @@ namespace RosMovies.Controllers
 
         }
 
-        public FileContentResult GetImage(int movieId)
+        public FileContentResult GetImage(int movieId = 4)
         {
+            //if (movieId == null)
+            //{
+            //    throw new ArgumentNullException(nameof(movieId));
+            //}
+
             Movie mov = db.Movies.FirstOrDefault(p => p.Id == movieId);
             if (mov != null)
             {

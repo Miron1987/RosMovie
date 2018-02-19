@@ -9,7 +9,7 @@ namespace RosMovies.Models
 {
     public class Movie
     {
-        [Display(AutoGenerateField = false)]
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         [ScaffoldColumn(false)]
@@ -26,6 +26,7 @@ namespace RosMovies.Models
         public string Actors { get; set; }
 
         [Required(ErrorMessage = "Введите описание")]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
@@ -38,8 +39,10 @@ namespace RosMovies.Models
         [HiddenInput(DisplayValue = false)]
         public string ImageMimeType { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public virtual ICollection<Review> Reviews { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public virtual ICollection<User> Users { get; }
 
         public Movie()

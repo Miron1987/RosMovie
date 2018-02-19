@@ -9,38 +9,12 @@
 @using (Html.BeginForm("Edit", "Movie",
                     FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.EditorForModel()
-    <div class="editor-label">Image</div>
-        <div class="editor-field">
-            @if (Model.ImageData == null)
-            {
-                @:None
-            }
-            else
-            {
-                <img width="150" height="150" src="@Url.Action("GetImage", "Movie", new {
-                                                            Model.Id
-                                                            })" />
-            }
-            <div>
-                Upload new image:
-                <input type="file" name="Image" />
-            </div>
-        </div>
-        <input type="submit" value="Save" />
-        @Html.ActionLink("Cancel and return to List", "Index")
-}
-
-
-@*@using (Html.BeginForm())
-{
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
+        <h4>Добавление фильма</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -81,20 +55,109 @@
             </div>
         </div>
 
+        <div>
+            Upload new image:
+            <input type="file" name="Image" />
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </div>
     </div>
+
+
+
+
+
+
+    @*@Html.EditorForModel()
+        <div class="editor-label">Image</div>
+            <div class="editor-field">
+                @if (Model.ImageData == null)
+                {
+                    @:None
+                }
+                else
+                {
+                    <img width="150" height="150" src="@Url.Action("GetImage", "Movie", new {
+                                                                Model.Id
+                                                                })" />
+                }
+                <div>
+                    Upload new image:
+                    <input type="file" name="Image" />
+                </div>
+            </div>
+            <input type="submit" value="Save" />
+            @Html.ActionLink("Cancel and return to List", "Index")*@
 }
 
-<div>
-    Upload new image:
-    <input type="file" name="Image" />
-</div>
 
-<input type="submit" value="Save" />*@
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Director, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Actors, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Actors, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Actors, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        Upload new image:
+        <input type="file" name="Image" />
+    </div>
+
+    <input type="submit" value="Save" />*@
 
 <div>
     @Html.ActionLink("К списку фильмов", "MovieList")

@@ -8,7 +8,7 @@
 
 
 
-@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new { movie = new Movie { } }))
+@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new { movie = new Movie { } }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
