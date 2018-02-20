@@ -12,8 +12,11 @@ namespace RosMovies.Models.Account
         [EmailAddress]
         [Display(Name = "E-mail")]
         public string Login { get; set; }
+
+
         [Required(ErrorMessage = "Введите пароль")]
         [Display(Name = "Пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
