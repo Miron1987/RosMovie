@@ -30,7 +30,40 @@
 <div class="container-fluid" style="margin-left:30px">
     @using (Html.BeginForm("MovieList", "Movie", FormMethod.Post, new { @class="form-inline"}))
     {
-        <div class="row">
+        <table>
+            <tr><th>Название</th><th>Режиссер</th><th>Актеры</th><th>Жанр</th><th></th></tr>
+            <tr>
+                <td>
+                    <div class="form-group" style="padding-top:15px">
+                        <input class="form-control" id="movieName" name="movieName" type="text" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" style="padding-top:15px">
+                        <input class="form-control" id="movieDirector" name="movieDirector" type="text" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" style="padding-top:15px">
+                        <input class="form-control" id="movieActor" name="movieActor" type="text" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" style="padding-top:15px">
+                        <input class="form-control" id="movieGenre" name="movieGenre" type="text" />
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" style="padding-top: 15px">
+                        <button class="btn btn-default" name="show" id="botShow">Отправить</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+
+        @*<div class="row">
             <div class="form-group" style="padding-top:15px; width: 20%">
                 <input class="form-control" id="movieName" name="movieName" type="text" />
             </div>
@@ -46,7 +79,7 @@
             <div class="form-group" style="padding-top: 15px">
                 <button class="btn btn-default" name="show" id="botShow">Отправить</button>
             </div>
-        </div>
+        </div>*@
     }
 
 </div>
